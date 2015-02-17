@@ -1,6 +1,5 @@
 package com.hawk.GA;
 
-
 public class GAControls {
 	public static final int TrainingImageWidth = 400;
 	public static final int TrainingImageHeight = 240;

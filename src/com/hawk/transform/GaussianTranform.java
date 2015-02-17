@@ -8,28 +8,31 @@ import com.hawk.transform.constant.TransConstants;
 
 public class GaussianTranform extends Transform {
 	private int size;
-	
+
 	public GaussianTranform() {
 		// TODO Auto-generated constructor stub
 		super();
 	}
-	
-	public GaussianTranform(Mat src,Mat dst,int size){
+
+	public GaussianTranform(Mat src, Mat dst, int size) {
 		super(src, dst);
 		this.size = size;
 	}
+
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
-	//	super.initialize();
+		// super.initialize();
 		this.size = 3;
 	}
+
 	@Override
 	public void makeTransform() {
 		// TODO Auto-generated method stub
-		
-		Imgproc.GaussianBlur(src, dst, new Size(size,size),TransConstants.GAUSSIAN_SIGMA);
-		
+
+		Imgproc.GaussianBlur(src, dst, new Size(size, size),
+				TransConstants.GAUSSIAN_SIGMA);
+
 	}
 
 	public int getSize() {
