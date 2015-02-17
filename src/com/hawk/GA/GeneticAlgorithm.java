@@ -13,7 +13,7 @@ public class GeneticAlgorithm {
 	public List<Mat> trainingImages = new ArrayList<Mat>();
 	public List<EcoFeature> features = new ArrayList<EcoFeature>();
 
-	void loadImages(int n) {
+	public void loadImages(int n) {
 		// load first n images (or all if < n images in folder)
 		// from GAControls.TrainingImageDirectory
 		File directory = new File(GAControls.TrainingImageDirectory);
@@ -29,7 +29,7 @@ public class GeneticAlgorithm {
 		}
 	}
 
-	void initializeFeatures(int n) {
+	public void initializeFeatures(int n) {
 		for (int i = 0; i < n; i++) {
 			features.add(new EcoFeature());
 		}

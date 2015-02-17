@@ -6,7 +6,7 @@ import java.util.List;
 import org.opencv.core.Mat;
 
 public class Perceptron {
-	List<Double> weights;
+	public List<Double> weights;
 	double learningRate;
 	
 	public Perceptron(int cols) {

@@ -1,4 +1,4 @@
-package com.hawk.GA;
+package com.hawk.main;
 
 
 import java.awt.Window;
@@ -11,7 +11,12 @@ import org.opencv.highgui.Highgui;
 //import org.opencv.imgproc.Imgproc;
 
 
+
 import com.atul.JavaOpenCV.Imshow;
+import com.hawk.GA.EcoFeature;
+import com.hawk.GA.GAControls;
+import com.hawk.GA.GeneticAlgorithm;
+import com.hawk.GA.Perceptron;
 import com.hawk.transform.DistanceTransform;
 import com.hawk.transform.ErodeTransform;
 import com.hawk.transform.GaborTransform;

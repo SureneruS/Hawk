@@ -215,7 +215,7 @@ public class EcoFeature {
 		return roi;
 	}
 	
-	void printFeature() {
+	public void printFeature() {
 		System.out.println(this.region.x);
 		System.out.println(this.region.y);
 		System.out.println(this.region.width);
