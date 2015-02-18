@@ -1,8 +1,11 @@
 package com.hawk.transform;
 
+import java.util.Random;
+
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
+import com.hawk.GA.Helper;
 import com.hawk.transform.constant.TransConstants;
 
 public class DilateTransform extends Transform {
@@ -24,7 +27,8 @@ public class DilateTransform extends Transform {
 	public void initialize() {
 		// TODO Auto-generated method stub
 		// super.initialize();
-		this.iteration = 3;
+		Random randomGenerator = new Random();
+		this.iteration = Helper.getRandomInRange(1, 3, randomGenerator);
 	}
 
 	@Override

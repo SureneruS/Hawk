@@ -1,9 +1,12 @@
 package com.hawk.transform;
 
+import java.util.Random;
+
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
+import com.hawk.GA.Helper;
 import com.hawk.transform.constant.TransConstants;
 
 public class SobelTransform extends Transform {
@@ -63,9 +66,14 @@ public class SobelTransform extends Transform {
 	public void initialize() {
 		// TODO Auto-generated method stub
 		super.initialize();
-		this.dx = 1;
-		this.dy = 1;
-		this.ksize = 3;
+		Random randomGenerator = new Random();
+		this.dx = Helper.getRandomInRange(0, 2, randomGenerator);
+		this.dy = Helper.getRandomInRange(0, 2, randomGenerator);
+		this.ksize = Helper.getRandomInRange(1, 7, randomGenerator);
+		if(this.dx + this.dy == 0)
+			this.dx=1;
+		if (this.ksize % 2 == 0)
+			this.ksize=3;
 	}
 
 	@Override
