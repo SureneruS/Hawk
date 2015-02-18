@@ -45,18 +45,12 @@ public class Hello {
 
 	public static void testGA() {
 		GeneticAlgorithm ga = new GeneticAlgorithm();
-		ga.initializeFeatures(1);
-
-		ga.loadImages(GAControls.NumberOfTrainingImages);
-
-		for (EcoFeature e : ga.features) {
-			e.printFeature();
-			e.applyFeature(ga.trainingImages.get(0));
-
-		}
+		ga.initializeFeatures(2);
+		ga.loadImages();
+		ga.trainFeatures();
 
 		Imshow window = new Imshow("Training");
-		window.showImage(ga.trainingImages.get(0));
+		window.showImage(ga.positiveTrainingImages.get(0));
 
 		/*
 		 * Mat m = new Mat(new Size(3, 1), CvType.CV_8UC1);
@@ -68,7 +62,7 @@ public class Hello {
 		 * 
 		 * System.out.println(Helper.linearize(m).dump());
 		 */
-		System.out.println(ga.trainingImages.size());
+		System.out.println(ga.positiveTrainingImages.size());
 	}
 
 	public static void testPerceptron() {

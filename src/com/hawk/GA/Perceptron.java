@@ -10,7 +10,6 @@ public class Perceptron {
 	double learningRate;
 
 	public Perceptron(int cols) {
-		// TODO Auto-generated constructor stub
 		this.weights = new ArrayList<Double>();
 		// The first element is bias
 		this.weights.add(new Double(1));
@@ -28,7 +27,12 @@ public class Perceptron {
 	}
 
 	public boolean classify(Mat featureVector) {
-
+		System.out.println(featureVector.channels());
+		Double output = weights.get(0);
+		for(int i = 1; i <= weights.size(); i++) {
+			output += weights.get(i) * featureVector.get(0, i)[0];
+		}
+		
 		return false;
 	}
 

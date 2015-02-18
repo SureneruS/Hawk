@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 
@@ -225,5 +224,10 @@ public class EcoFeature {
 		for (Transform t : transforms) {
 			System.out.println(t.getClass().toString());
 		}
+	}
+
+	public void trainWith(Mat trainingImage, boolean expectedOutput) {
+		Mat featureVector = applyFeature(trainingImage);
+		perceptron.train(featureVector, expectedOutput);
 	}
 }
