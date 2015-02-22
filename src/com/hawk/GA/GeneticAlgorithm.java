@@ -53,7 +53,7 @@ public class GeneticAlgorithm {
 
 	public void trainFeatures() {
 		for (EcoFeature feature : features) {
-			feature.printFeature();
+			//feature.printFeature();
 			for(Mat trainingImage : positiveTrainingImages) {
 				feature.trainWith(trainingImage, true);
 			}
@@ -63,5 +63,18 @@ public class GeneticAlgorithm {
 			}
 		}
 
+	}
+
+	public void updateFitnessScores() {
+		for(EcoFeature feature : this.features) {
+			for(Mat trainingImage : positiveTrainingImages) {
+				feature.updateErrorWith(trainingImage, true);
+			}
+			
+			for(Mat trainingImage : negativeTrainingImages) {
+				feature.updateErrorWith(trainingImage, false);
+			}
+			feature.calculateFitnessScore();
+		}
 	}
 }

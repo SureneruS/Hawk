@@ -35,4 +35,8 @@ public class Helper {
 	public static void log(Mat image) {
 		System.out.println("Image dump:\n " + image.dump());
 	}
+	
+	public static int Int(boolean b) {
+		return b ? 1 : 0;
+	}
 }
