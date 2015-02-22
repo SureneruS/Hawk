@@ -1,9 +1,12 @@
 package com.hawk.transform;
 
+import java.util.Random;
+
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
+import com.hawk.GA.Helper;
 import com.hawk.transform.constant.TransConstants;
 
 public class AdaptiveThresTransform extends Transform {
@@ -30,15 +33,35 @@ public class AdaptiveThresTransform extends Transform {
 	public void initialize() {
 		// TODO Auto-generated method stub
 		super.initialize();
-		this.adaptiveMethod = Imgproc.ADAPTIVE_THRESH_MEAN_C;
-		this.thresholdType = Imgproc.THRESH_BINARY;
-		this.blockSize = 3;
+		Random randomGenerator = new Random();
+		this.blockSize = Helper.getRandomInRange(3, 7, randomGenerator);
+		if(this.blockSize % 2 == 0)
+			this.blockSize--;
+		int a=Helper.getRandomInRange(0, 3, randomGenerator);
+		switch(a)
+		{
+		case 0:
+			this.adaptiveMethod=Imgproc.ADAPTIVE_THRESH_MEAN_C;
+			this.thresholdType=Imgproc.THRESH_BINARY;
+			break;
+		case 1:
+			this.adaptiveMethod=Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C;
+			this.thresholdType=Imgproc.THRESH_BINARY;
+			break;
+		case 2:
+			this.adaptiveMethod=Imgproc.ADAPTIVE_THRESH_MEAN_C;
+			this.thresholdType=Imgproc.THRESH_BINARY_INV;
+			break;
+		case 3:
+			this.adaptiveMethod=Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C;
+			this.thresholdType=Imgproc.THRESH_BINARY_INV;
+			break;
+		}
 	}
 
 	@Override
 	public void makeTransform() {
-		Imgproc.adaptiveThreshold(src, dst, maxValue, adaptiveMethod,
-				thresholdType, blockSize, mean);
+		Imgproc.adaptiveThreshold(src, dst, maxValue, adaptiveMethod,thresholdType, blockSize, mean);
 	}
 
 	public int getAdaptiveMethod() {

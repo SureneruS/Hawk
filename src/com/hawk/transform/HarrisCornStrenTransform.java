@@ -1,8 +1,12 @@
 package com.hawk.transform;
 
+import java.util.Random;
+
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
+
+import com.hawk.GA.Helper;
 
 public class HarrisCornStrenTransform extends Transform {
 	private int blockSize;
@@ -50,8 +54,11 @@ public class HarrisCornStrenTransform extends Transform {
 	public void initialize() {
 		// TODO Auto-generated method stub
 		super.initialize();
-		this.blockSize = 2;
-		this.ksize = 3;
+		Random randomGenerator = new Random();
+		this.ksize = Helper.getRandomInRange(1, 7, randomGenerator);
+		if (this.ksize % 2 == 0)
+			this.ksize=3;
+		this.blockSize = Helper.getRandomInRange(2, 4, randomGenerator);
 		this.k = 0.04;
 	}
 
