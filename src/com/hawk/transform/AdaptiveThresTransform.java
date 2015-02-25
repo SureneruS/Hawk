@@ -61,7 +61,8 @@ public class AdaptiveThresTransform extends Transform {
 
 	@Override
 	public void makeTransform() {
-		Imgproc.adaptiveThreshold(src, dst, maxValue, adaptiveMethod,thresholdType, blockSize, mean);
+		Imgproc.adaptiveThreshold(src, dst, maxValue, adaptiveMethod,
+				thresholdType, blockSize, mean);
 	}
 
 	public int getAdaptiveMethod() {
