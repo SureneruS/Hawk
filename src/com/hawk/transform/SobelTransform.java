@@ -2,7 +2,6 @@ package com.hawk.transform;
 
 import java.util.Random;
 
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 

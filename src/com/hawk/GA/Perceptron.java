@@ -6,30 +6,82 @@ import java.util.List;
 import org.opencv.core.Mat;
 
 public class Perceptron {
+	public Double bias;
 	public List<Double> weights;
 	double learningRate;
+	int falsePositive, falseNegative, truePositive, trueNegative;
+	int fitness;
 
 	public Perceptron(int cols) {
-		// TODO Auto-generated constructor stub
 		this.weights = new ArrayList<Double>();
-		// The first element is bias
-		this.weights.add(new Double(1));
+		this.bias = new Double(0);
 
 		// Initialize all weights to 1
 		for (int i = 0; i < cols; i++) {
-			this.weights.add(new Double(1));
+			this.weights.add(new Double(0));
 		}
 
 		this.learningRate = GAControls.PerceptronLearningRate;
+		this.falsePositive = this.falseNegative = this.truePositive = this.trueNegative = 0;
 	}
 
 	public void train(Mat featureVector, boolean expectedOutput) {
 		boolean currentOutput = this.classify(featureVector);
+		int error = Helper.Int(expectedOutput) - Helper.Int(currentOutput);
+		System.out.println(error);
+		this.bias += learningRate * error;
+		int i = 0;
+		for (Double weight : this.weights) {
+			System.out.print(weight + " " );//+ featureVector.get(0, i)[0] + "--");
+			Double newWeight = weight + learningRate * error * featureVector.get(0, i)[0];
+			weights.set(i, newWeight);
+			i++;
+		}
+		System.out.println();
 	}
 
 	public boolean classify(Mat featureVector) {
+		//System.out.println(featureVector.channels());
+		Double output = bias;
+		for (int i = 0; i < this.weights.size(); i++) {
+			output += this.weights.get(i) * featureVector.get(0, i)[0];
+		}
 
-		return false;
+		return output > 0;
+	}
+
+	public void updateErrorRate(Mat featureVector, boolean expectedOutput) {
+		boolean currentOutput = this.classify(featureVector);
+		int type = (currentOutput ? 1 : 0) + (expectedOutput ? 2 : 0);
+		/*
+		 * type will have four values 0, 1, 2, 3. Each value will correspond to
+		 * one of the four types fp, fn, tp and tn
+		 */
+		switch (type) {
+		case 0:
+			this.trueNegative++;
+			break;
+		case 1:
+			falsePositive++;
+			break;
+		case 2:
+			falseNegative++;
+			break;
+		case 3:
+			truePositive++;
+			break;
+		}
+	}
+
+	public int getFitness() {
+		updateFitness();
+		return fitness;
+	}
+
+	private void updateFitness() {
+		fitness = (int) (((truePositive * 500.0) / (truePositive + falseNegative)) +
+						 ((trueNegative * 500.0) / (trueNegative + falsePositive)));
+		System.out.println(truePositive + " " + falseNegative + " " + trueNegative + " " + falsePositive);
 	}
 
 }

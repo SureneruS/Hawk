@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 
@@ -27,10 +26,10 @@ import com.hawk.transform.TransID;
 import com.hawk.transform.Transform;
 
 public class EcoFeature {
-	public Rect region;
-	public List<Transform> transforms = new ArrayList<Transform>();
-	public Perceptron perceptron;
-
+	private Rect region;
+	private List<Transform> transforms = new ArrayList<Transform>();
+	private Perceptron perceptron;
+	public int fitnessScore;
 	boolean isWorking;
 
 	public EcoFeature() {
@@ -188,20 +187,20 @@ public class EcoFeature {
 	public Mat applyFeature(Mat image) {
 		Mat roi = new Mat();
 		new Mat(image, region).copyTo(roi);
-		Imshow window1 = new Imshow("Test");
-		window1.showImage(roi);
-		int i = 0;
+		//int i = 0;
 		try {
 			for (Transform transform : transforms) {
 				transform.setSrc(roi);
 				transform.setDst(roi);
 				transform.makeTransform();
 
-				Imshow window = new Imshow("Test" + i++);
-				window.showImage(roi);
+				//Imshow window = new Imshow("Test" + i++);
+				//window.showImage(roi);
 
 			}
 
+			//Imshow window1 = new Imshow("Test");
+			//window1.showImage(roi);
 			roi = Helper.linearize(roi);
 
 			if (perceptron == null) {
@@ -225,5 +224,19 @@ public class EcoFeature {
 		for (Transform t : transforms) {
 			System.out.println(t.getClass().toString());
 		}
+	}
+
+	public void trainWith(Mat trainingImage, boolean expectedOutput) {
+		Mat featureVector = applyFeature(trainingImage);
+		perceptron.train(featureVector, expectedOutput);
+	}
+
+	public void calculateFitnessScore() {
+		this.fitnessScore = perceptron.getFitness();
+	}
+
+	public void updateErrorWith(Mat trainingImage, boolean expectedOutput) {
+		Mat featureVector = applyFeature(trainingImage);
+		perceptron.updateErrorRate(featureVector, expectedOutput);
 	}
 }

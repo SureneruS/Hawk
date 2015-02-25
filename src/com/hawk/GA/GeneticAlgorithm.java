@@ -10,21 +10,21 @@ import org.opencv.highgui.Highgui;
 import org.opencv.imgproc.Imgproc;
 
 public class GeneticAlgorithm {
-	public List<Mat> trainingImages = new ArrayList<Mat>();
+	public List<Mat> positiveTrainingImages = new ArrayList<Mat>();
+	public List<Mat> negativeTrainingImages = new ArrayList<Mat>();
 	public List<EcoFeature> features = new ArrayList<EcoFeature>();
+	
+	public void loadImages() {
+		addImages(positiveTrainingImages, GAControls.PositiveTrainingImageDirectory);
+		addImages(negativeTrainingImages, GAControls.NegativeTrainingImageDirectory);
+	}
 
-	public void loadImages(int n) {
-		// load first n images (or all if < n images in folder)
-		// from GAControls.TrainingImageDirectory
-		File directory = new File(GAControls.TrainingImageDirectory);
-		int i = 0;
+	private void addImages(List<Mat> imageList, String trainingimagedirectory) {
+		File directory = new File(trainingimagedirectory);;
 		File[] fileList = directory.listFiles();
 		for (File file : fileList) {
 			if (file.isFile()) {
-				addImage(file.getAbsolutePath());
-			}
-			if (i++ == n) {
-				break;
+				addImage(file.getAbsolutePath(), imageList);
 			}
 		}
 	}
@@ -35,11 +35,11 @@ public class GeneticAlgorithm {
 		}
 	}
 
-	private void addImage(String path) {
+	private void addImage(String path, List<Mat> imageList) {
 		try {
 			Mat inputImage = Highgui.imread(path);
 			standardizeImage(inputImage);
-			trainingImages.add(inputImage);
+			imageList.add(inputImage);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,5 +49,32 @@ public class GeneticAlgorithm {
 		Imgproc.cvtColor(inputImage, inputImage, Imgproc.COLOR_RGB2GRAY);
 		Imgproc.resize(inputImage, inputImage, new Size(
 				GAControls.TrainingImageWidth, GAControls.TrainingImageHeight));
+	}
+
+	public void trainFeatures() {
+		for (EcoFeature feature : features) {
+			//feature.printFeature();
+			for(Mat trainingImage : positiveTrainingImages) {
+				feature.trainWith(trainingImage, true);
+			}
+			
+			for(Mat trainingImage : negativeTrainingImages) {
+				feature.trainWith(trainingImage, false);
+			}
+		}
+
+	}
+
+	public void updateFitnessScores() {
+		for(EcoFeature feature : this.features) {
+			for(Mat trainingImage : positiveTrainingImages) {
+				feature.updateErrorWith(trainingImage, true);
+			}
+			
+			for(Mat trainingImage : negativeTrainingImages) {
+				feature.updateErrorWith(trainingImage, false);
+			}
+			feature.calculateFitnessScore();
+		}
 	}
 }

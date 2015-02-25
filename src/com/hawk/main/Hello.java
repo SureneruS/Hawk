@@ -1,26 +1,11 @@
 package com.hawk.main;
 
-import java.awt.Window;
-
 import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
-import org.opencv.highgui.Highgui;
-//import org.opencv.imgproc.Imgproc;
 
-import com.atul.JavaOpenCV.Imshow;
 import com.hawk.GA.EcoFeature;
-import com.hawk.GA.GAControls;
 import com.hawk.GA.GeneticAlgorithm;
 import com.hawk.GA.Perceptron;
-import com.hawk.transform.DistanceTransform;
-import com.hawk.transform.ErodeTransform;
-import com.hawk.transform.GaborTransform;
-import com.hawk.transform.GaussianTranform;
-import com.hawk.transform.LogTransform;
-import com.hawk.transform.SobelTransform;
-import com.hawk.transform.Transform;
+//import org.opencv.imgproc.Imgproc;
 
 public class Hello {
 
@@ -46,29 +31,14 @@ public class Hello {
 	public static void testGA() {
 		GeneticAlgorithm ga = new GeneticAlgorithm();
 		ga.initializeFeatures(1);
-
-		ga.loadImages(GAControls.NumberOfTrainingImages);
-
-		for (EcoFeature e : ga.features) {
-			e.printFeature();
-			e.applyFeature(ga.trainingImages.get(0));
-
+		ga.loadImages();
+		ga.trainFeatures();
+		ga.updateFitnessScores();
+		for(EcoFeature f : ga.features) {
+			f.printFeature();
+			System.out.println(f.fitnessScore);;
 		}
-
-		Imshow window = new Imshow("Training");
-		window.showImage(ga.trainingImages.get(0));
-
-		/*
-		 * Mat m = new Mat(new Size(3, 1), CvType.CV_8UC1);
-		 * 
-		 * for(int i = 0; i < 3; i++) { for(int j = 0; j < 1; j++) { m.put(i, j,
-		 * i*3 + j); } }
-		 * 
-		 * System.out.println(m.dump());
-		 * 
-		 * System.out.println(Helper.linearize(m).dump());
-		 */
-		System.out.println(ga.trainingImages.size());
+		System.out.println(ga.positiveTrainingImages.size());
 	}
 
 	public static void testPerceptron() {
