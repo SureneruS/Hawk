@@ -6,11 +6,11 @@ import java.util.List;
 import org.opencv.core.Mat;
 
 public class Perceptron {
-	public Double bias;
-	public List<Double> weights;
-	double learningRate;
-	int falsePositive, falseNegative, truePositive, trueNegative;
-	int fitness;
+	private Double bias;
+	private List<Double> weights;
+	private double learningRate;
+	private int falsePositive, falseNegative, truePositive, trueNegative;
+	private int fitness;
 
 	public Perceptron(int cols) {
 		this.weights = new ArrayList<Double>();
@@ -28,16 +28,16 @@ public class Perceptron {
 	public void train(Mat featureVector, boolean expectedOutput) {
 		boolean currentOutput = this.classify(featureVector);
 		int error = Helper.Int(expectedOutput) - Helper.Int(currentOutput);
-		System.out.println(error);
+		//System.out.println(error);
 		this.bias += learningRate * error;
 		int i = 0;
 		for (Double weight : this.weights) {
-			System.out.print(weight + " " );//+ featureVector.get(0, i)[0] + "--");
+			///System.out.print(weight + " " );//+ featureVector.get(0, i)[0] + "--");
 			Double newWeight = weight + learningRate * error * featureVector.get(0, i)[0];
 			weights.set(i, newWeight);
 			i++;
 		}
-		System.out.println();
+		//System.out.println();
 	}
 
 	public boolean classify(Mat featureVector) {
