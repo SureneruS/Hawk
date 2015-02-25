@@ -1,3 +1,4 @@
 .classpath
 src/com/hawk/transform/Test.java
 src/com/hawk/GA/GAControls.java
+bin/*
