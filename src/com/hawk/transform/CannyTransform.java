@@ -1,7 +1,11 @@
 package com.hawk.transform;
 
+import java.util.Random;
+
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
+
+import com.hawk.GA.Helper;
 
 public class CannyTransform extends Transform {
 	private double minTresh, maxTresh;
@@ -58,10 +62,17 @@ public class CannyTransform extends Transform {
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
-		this.minTresh = 30;
-		this.maxTresh = 90;
-		this.kernel = 3;
-		this.norm = true;
+		Random randomGenerator = new Random();
+		this.kernel = Helper.getRandomInRange(3, 7, randomGenerator);
+		this.norm=true;
+		if (this.kernel % 2 == 0)
+		{
+			this.kernel--;
+			this.norm=false;
+		}
+		this.minTresh=Helper.getRandomInRange(10, 100, randomGenerator);
+		this.maxTresh = this.minTresh*Helper.getRandomInRange(2, 4, randomGenerator);
+
 		// super.initialize();
 	}
 

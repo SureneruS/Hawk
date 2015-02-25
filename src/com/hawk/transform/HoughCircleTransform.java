@@ -1,8 +1,14 @@
 package com.hawk.transform;
 
+import java.util.Random;
+
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import com.hawk.GA.Helper;
 import com.hawk.transform.constant.TransConstants;
 
 public class HoughCircleTransform extends Transform {
@@ -39,8 +45,9 @@ public class HoughCircleTransform extends Transform {
 	@Override
 	public void makeTransform() {
 		// TODO Auto-generated method stub
-		Imgproc.HoughCircles(src, circles, TransConstants.HOUGH_CIRCLES_METHOD,
-				TransConstants.HOUGH_CIRCLES_DP, minDist);
+		if(circles == null)
+			circles = new Mat();
+		Imgproc.HoughCircles(src, circles, TransConstants.HOUGH_CIRCLES_METHOD,TransConstants.HOUGH_CIRCLES_DP, minDist);
 		// makeDestImage();
 		this.dst = circles;
 	}
@@ -48,7 +55,10 @@ public class HoughCircleTransform extends Transform {
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
-		this.minDist = src.rows() / 8;
+		Random randomGenerator = new Random();
+		int a = Helper.getRandomInRange(2, 5, randomGenerator);
+		a=(int) java.lang.Math.pow(2, a);
+		this.minDist = src.rows() / a;
 		// super.initialize();
 	}
 	/*
