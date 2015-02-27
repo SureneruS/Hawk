@@ -13,8 +13,23 @@ public class GeneticAlgorithm {
 	public List<Mat> positiveTrainingImages = new ArrayList<Mat>();
 	public List<Mat> negativeTrainingImages = new ArrayList<Mat>();
 	public List<EcoFeature> features = new ArrayList<EcoFeature>();
+	public List<EcoFeature> savedFeatures = new ArrayList<EcoFeature>();
 	
-	public void loadImages() {
+	private int populationSize;
+	private int numberOfGenerations;
+	private int fitnessThreshold;
+	private int selectionCount;
+	private int featuresLimit;
+	
+	private GeneticAlgorithm(int popSize, int GenNo, int thres, int sel, int lim) {
+		this.populationSize = popSize;
+		this.numberOfGenerations = GenNo;
+		this.fitnessThreshold = thres;
+		this.selectionCount = sel;
+		this.featuresLimit = lim;
+	}
+	
+	private void loadImages() {
 		addImages(positiveTrainingImages, GAControls.PositiveTrainingImageDirectory);
 		addImages(negativeTrainingImages, GAControls.NegativeTrainingImageDirectory);
 	}
@@ -29,8 +44,8 @@ public class GeneticAlgorithm {
 		}
 	}
 
-	public void initializeFeatures(int n) {
-		for (int i = 0; i < n; i++) {
+	private void initializeFeatures() {
+		for (int i = 0; i < populationSize; i++) {
 			features.add(new EcoFeature());
 		}
 	}
@@ -51,7 +66,7 @@ public class GeneticAlgorithm {
 				GAControls.TrainingImageWidth, GAControls.TrainingImageHeight));
 	}
 
-	public void trainFeatures() {
+	private void trainFeatures() {
 		for (EcoFeature feature : features) {
 			//feature.printFeature();
 			for(Mat trainingImage : positiveTrainingImages) {
@@ -65,16 +80,61 @@ public class GeneticAlgorithm {
 
 	}
 
-	public void updateFitnessScores() {
+	private void updateFitnessScores() {
 		for(EcoFeature feature : this.features) {
+			System.out.println("Training feature...");
 			for(Mat trainingImage : positiveTrainingImages) {
+				//System.out.println("Positive Image input...");
 				feature.updateErrorWith(trainingImage, true);
 			}
 			
 			for(Mat trainingImage : negativeTrainingImages) {
+				//System.out.println("Negative Image input...");
 				feature.updateErrorWith(trainingImage, false);
 			}
 			feature.calculateFitnessScore();
+		}
+	}
+	
+	private void saveFeature(EcoFeature e) {
+		// TODO Auto-generated method stub
+	}
+	
+	private void saveFeatures() {
+		for(EcoFeature feature : this.features) {
+			if(feature.fitnessScore >= fitnessThreshold) {
+				saveFeature(feature);
+			}
+		}
+	}
+	
+	private EcoFeature randomGoodFeature() {
+		// TODO
+		return new EcoFeature();
+	}
+	
+	private void enhanceFeatures() {
+		// TODO Auto-generated method stub
+		List<EcoFeature> newFeatures = new ArrayList<EcoFeature>();
+		// cross over rate = 0.6
+		for(int i = 0; i < (0.4 * this.populationSize); i++) { 
+			newFeatures.add(randomGoodFeature());
+		}
+		
+		for(int i = 0; i < (0.6 * this.populationSize); i++) {
+			//newFeatures.add(e);
+		}
+		
+	}
+	
+	public void run() {
+		this.initializeFeatures();
+		this.loadImages();
+		for(int generationNumber = 1; generationNumber <= numberOfGenerations && savedFeatures.size() < selectionCount; generationNumber++) {
+			this.trainFeatures();
+			this.updateFitnessScores();
+			this.saveFeatures();
+			this.enhanceFeatures();
 		}
 	}
 }

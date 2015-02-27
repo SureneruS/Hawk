@@ -29,11 +29,8 @@ public class Hello {
 	}
 
 	public static void testGA() {
-		GeneticAlgorithm ga = new GeneticAlgorithm();
-		ga.initializeFeatures(1);
-		ga.loadImages();
-		ga.trainFeatures();
-		ga.updateFitnessScores();
+		GeneticAlgorithm ga = new GeneticAlgorithm(1, 1, 700);
+		ga.run();
 		for(EcoFeature f : ga.features) {
 			f.printFeature();
 			System.out.println(f.fitnessScore);;
@@ -43,6 +40,6 @@ public class Hello {
 
 	public static void testPerceptron() {
 		Perceptron p = new Perceptron(10);
-		System.out.println(p.weights.get(0));
+		//System.out.println(p.weights.get(0));
 	}
 }
