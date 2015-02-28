@@ -26,8 +26,7 @@ public class GaussianTranform extends Transform {
 	public void initialize() {
 		// TODO Auto-generated method stub
 		// super.initialize();
-		Random randomGenerator = new Random();
-		this.size = Helper.getRandomInRange(1, 9, randomGenerator);
+		this.size = Helper.getRandomInRange(1, 9);
 		if (this.size % 2 == 0)
 			this.size--;
 	}

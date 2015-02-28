@@ -44,8 +44,7 @@ public class DistanceTransform extends Transform {
 	public void initialize() {
 		// TODO Auto-generated method stub
 		// super.initialize();
-		Random randomGenerator = new Random();
-		int a = Helper.getRandomInRange(0, 2, randomGenerator);
+		int a = Helper.getRandomInRange(0, 2);
 		switch(a)
 		{
 		case 0:
@@ -58,7 +57,7 @@ public class DistanceTransform extends Transform {
 			break;
 		case 2:
 			this.distance = Imgproc.CV_DIST_L2;
-			int b = Helper.getRandomInRange(0, 2, randomGenerator);
+			int b = Helper.getRandomInRange(0, 2);
 			switch(b)
 			{
 			case 0:

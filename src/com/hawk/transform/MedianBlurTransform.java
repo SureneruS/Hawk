@@ -30,8 +30,7 @@ public class MedianBlurTransform extends Transform {
 
 	@Override
 	public void initialize() {
-		Random randomGenerator = new Random();
-		this.ksize = Helper.getRandomInRange(1, 7, randomGenerator);
+		this.ksize = Helper.getRandomInRange(1, 7);
 		if (this.ksize % 2 == 0)
 			this.ksize--;
 	}

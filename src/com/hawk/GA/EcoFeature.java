@@ -54,16 +54,13 @@ public class EcoFeature {
 
 	private static List<Transform> generateTransforms() {
 		List<Transform> transformList = new ArrayList<Transform>();
-		Random randomGenerator = new Random();
 		int numberOfTransforms = Helper.getRandomInRange(
-				GAControls.MinimumTransforms, GAControls.MaximumTransforms,
-				randomGenerator);
+				GAControls.MinimumTransforms, GAControls.MaximumTransforms);
 
 		for (int i = 0; i < numberOfTransforms; i++) {
 			try {
 
-				boolean isFinalTransform = addTransform(transformList,
-						randomGenerator);
+				boolean isFinalTransform = addTransform(transformList);
 				if (isFinalTransform) {
 					break;
 				}
@@ -82,15 +79,14 @@ public class EcoFeature {
 	/*
 	 * Returns if the chosen transform must be final or not
 	 */
-	private static boolean addTransform(List<Transform> transformList,
-			Random randomGenerator) throws Exception {
+	private static boolean addTransform(List<Transform> transformList) throws Exception {
 		/*
 		 * transformList.add(new ErodeTransform()); transformList.add(new
 		 * LapcianTransform()); transformList.add(new ErodeTransform()); return
 		 * true;
 		 */
 		int randomTransform = Helper.getRandomInRange(0,
-				TransID.values().length - 1, randomGenerator);
+				TransID.values().length - 1);
 		// System.out.println("randT: " + randomTransform + " len: " +
 		// TransID.values().length);
 		TransID transId = TransID.values()[randomTransform];
@@ -156,22 +152,19 @@ public class EcoFeature {
 	}
 
 	private static Rect generateRegion() {
-		Random randomGenerator = new Random();
 		boolean ok = false;
 		while (!ok) {
 			try {
 				int startX = Helper.getRandomInRange(0,
-						GAControls.TrainingImageWidth, randomGenerator);
+						GAControls.TrainingImageWidth);
 				int startY = Helper.getRandomInRange(0,
-						GAControls.TrainingImageHeight, randomGenerator);
+						GAControls.TrainingImageHeight);
 				int width = Helper
 						.getRandomInRange(GAControls.MinimumRegionWidth,
-								GAControls.TrainingImageWidth - startX,
-								randomGenerator);
+								GAControls.TrainingImageWidth - startX);
 				int height = Helper.getRandomInRange(
 						GAControls.MinimumRegionHeight,
-						GAControls.TrainingImageHeight - startY,
-						randomGenerator);
+						GAControls.TrainingImageHeight - startY);
 				ok = true;
 				return new Rect(startX, startY, width, height);
 			} catch (Exception e) {
@@ -204,7 +197,7 @@ public class EcoFeature {
 			roi = Helper.linearize(roi);
 
 			if (perceptron == null) {
-				perceptron = new Perceptron(roi.cols());
+				perceptron = new Perceptron(roi.cols(), 0.1);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

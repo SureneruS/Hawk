@@ -62,16 +62,15 @@ public class CannyTransform extends Transform {
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
-		Random randomGenerator = new Random();
-		this.kernel = Helper.getRandomInRange(3, 7, randomGenerator);
+		this.kernel = Helper.getRandomInRange(3, 7);
 		this.norm=true;
 		if (this.kernel % 2 == 0)
 		{
 			this.kernel--;
 			this.norm=false;
 		}
-		this.minTresh=Helper.getRandomInRange(10, 100, randomGenerator);
-		this.maxTresh = this.minTresh*Helper.getRandomInRange(2, 4, randomGenerator);
+		this.minTresh=Helper.getRandomInRange(10, 100);
+		this.maxTresh = this.minTresh*Helper.getRandomInRange(2, 4);
 
 		// super.initialize();
 	}

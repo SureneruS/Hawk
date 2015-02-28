@@ -21,7 +21,7 @@ public class GeneticAlgorithm {
 	private int selectionCount;
 	private int featuresLimit;
 	
-	private GeneticAlgorithm(int popSize, int GenNo, int thres, int sel, int lim) {
+	public GeneticAlgorithm(int popSize, int GenNo, int thres, int sel, int lim) {
 		this.populationSize = popSize;
 		this.numberOfGenerations = GenNo;
 		this.fitnessThreshold = thres;
@@ -130,7 +130,7 @@ public class GeneticAlgorithm {
 	public void run() {
 		this.initializeFeatures();
 		this.loadImages();
-		for(int generationNumber = 1; generationNumber <= numberOfGenerations && savedFeatures.size() < selectionCount; generationNumber++) {
+		for(int generationNumber = 1; generationNumber <= numberOfGenerations && savedFeatures.size() < featuresLimit; generationNumber++) {
 			this.trainFeatures();
 			this.updateFitnessScores();
 			this.saveFeatures();

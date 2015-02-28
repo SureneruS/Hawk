@@ -65,10 +65,9 @@ public class SobelTransform extends Transform {
 	public void initialize() {
 		// TODO Auto-generated method stub
 		super.initialize();
-		Random randomGenerator = new Random();
-		this.dx = Helper.getRandomInRange(0, 2, randomGenerator);
-		this.dy = Helper.getRandomInRange(0, 2, randomGenerator);
-		this.ksize = Helper.getRandomInRange(1, 7, randomGenerator);
+		this.dx = Helper.getRandomInRange(0, 2);
+		this.dy = Helper.getRandomInRange(0, 2);
+		this.ksize = Helper.getRandomInRange(1, 7);
 		if(this.dx + this.dy == 0)
 			this.dx=1;
 		if (this.ksize % 2 == 0)

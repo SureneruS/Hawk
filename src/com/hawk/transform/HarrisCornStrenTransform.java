@@ -54,11 +54,10 @@ public class HarrisCornStrenTransform extends Transform {
 	public void initialize() {
 		// TODO Auto-generated method stub
 		super.initialize();
-		Random randomGenerator = new Random();
-		this.ksize = Helper.getRandomInRange(1, 7, randomGenerator);
+		this.ksize = Helper.getRandomInRange(1, 7);
 		if (this.ksize % 2 == 0)
 			this.ksize=3;
-		this.blockSize = Helper.getRandomInRange(2, 4, randomGenerator);
+		this.blockSize = Helper.getRandomInRange(2, 4);
 		this.k = 0.04;
 	}
 

@@ -33,11 +33,10 @@ public class AdaptiveThresTransform extends Transform {
 	public void initialize() {
 		// TODO Auto-generated method stub
 		super.initialize();
-		Random randomGenerator = new Random();
-		this.blockSize = Helper.getRandomInRange(3, 7, randomGenerator);
+		this.blockSize = Helper.getRandomInRange(3, 7);
 		if(this.blockSize % 2 == 0)
 			this.blockSize--;
-		int a=Helper.getRandomInRange(0, 3, randomGenerator);
+		int a=Helper.getRandomInRange(0, 3);
 		switch(a)
 		{
 		case 0:

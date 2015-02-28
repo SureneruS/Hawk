@@ -55,8 +55,7 @@ public class HoughCircleTransform extends Transform {
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
-		Random randomGenerator = new Random();
-		int a = Helper.getRandomInRange(2, 5, randomGenerator);
+		int a = Helper.getRandomInRange(2, 5);
 		a=(int) java.lang.Math.pow(2, a);
 		this.minDist = src.rows() / a;
 		// super.initialize();

@@ -27,8 +27,7 @@ public class DilateTransform extends Transform {
 	public void initialize() {
 		// TODO Auto-generated method stub
 		// super.initialize();
-		Random randomGenerator = new Random();
-		this.iteration = Helper.getRandomInRange(1, 3, randomGenerator);
+		this.iteration = Helper.getRandomInRange(1, 3);
 	}
 
 	@Override

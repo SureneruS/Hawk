@@ -32,8 +32,7 @@ public class LapcianTransform extends Transform {
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
-		Random randomGenerator = new Random();
-		this.ksize = Helper.getRandomInRange(1, 7, randomGenerator);
+		this.ksize = Helper.getRandomInRange(1, 7);
 		if (this.ksize % 2 == 0)
 			this.ksize--;
 		// super.initialize();

@@ -25,8 +25,7 @@ public class ErodeTransform extends Transform {
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
-		Random randomGenerator = new Random();
-		this.iteration = Helper.getRandomInRange(1, 5, randomGenerator);
+		this.iteration = Helper.getRandomInRange(1, 5);
 	}
 
 	@Override

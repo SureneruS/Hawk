@@ -12,7 +12,7 @@ public class Perceptron {
 	private int falsePositive, falseNegative, truePositive, trueNegative;
 	private int fitness;
 
-	public Perceptron(int cols) {
+	public Perceptron(int cols, double rate) {
 		this.weights = new ArrayList<Double>();
 		this.bias = new Double(0);
 
@@ -21,7 +21,7 @@ public class Perceptron {
 			this.weights.add(new Double(0));
 		}
 
-		this.learningRate = GAControls.PerceptronLearningRate;
+		this.learningRate = rate;
 		this.falsePositive = this.falseNegative = this.truePositive = this.trueNegative = 0;
 	}
 

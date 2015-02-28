@@ -7,7 +7,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.Size;
 
 public class Helper {
-	public static int getRandomInRange(int start, int end, Random random) {
+	public static int getRandomInRange(int start, int end) {
+		Random random = new Random();
 		if (start > end) {
 			throw new IllegalArgumentException("start > end: not possible");
 		}
