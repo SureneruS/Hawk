@@ -1,7 +1,5 @@
 package com.hawk.transform;
 
-import java.util.Random;
-
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
@@ -60,23 +58,54 @@ public class SobelTransform extends Transform {
 	public void setDdepth(int ddepth) {
 		this.ddepth = ddepth;
 	}
+	
+	public int setParam1() {
+		int temp = Helper.getRandomInRange(1, 7);
+		if(temp % 2 == 0)
+			temp = 3;
+		return temp;
+	}
+	
+	public int setParam2() {
+		return Helper.getRandomInRange(0, 2);
+		
+		
+	}
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-		super.initialize();
-		this.dx = Helper.getRandomInRange(0, 2);
-		this.dy = Helper.getRandomInRange(0, 2);
-		this.ksize = Helper.getRandomInRange(1, 7);
+		this.noOfParameters = 3;
+		this.ksize = this.setParam1();
+		this.dx = this.setParam2();
+		this.dy = this.setParam2();
 		if(this.dx + this.dy == 0)
-			this.dx=1;
-		if (this.ksize % 2 == 0)
-			this.ksize=3;
+			this.dx = 1;
+	}
+	
+	public void mutuate() {
+		switch(Helper.getRandomInRange(1, this.noOfParameters)) {
+		case 1:
+			int tempVal;
+			do {
+				tempVal = this.setParam1();
+			}while(tempVal == this.ksize);
+			this.ksize = tempVal;
+			break;
+		case 2:
+			this.dx = (this.dx + 1) % 3;
+			if(this.dx + this.dy == 0)
+				this.dx = 1;
+			break;
+		case 3:
+			this.dy = (this.dy + 1) % 3;
+			if(this.dx + this.dy == 0)
+				this.dy = 1;
+			break;
+		}
 	}
 
 	@Override
 	public void makeTransform() {
-		// TODO Auto-generated method stub
 		this.ddepth = src.depth();
 		Imgproc.Sobel(src, dst, ddepth, dx, dy, ksize,
 				TransConstants.SOBEL_SCALE, TransConstants.SOBEL_DELTA);

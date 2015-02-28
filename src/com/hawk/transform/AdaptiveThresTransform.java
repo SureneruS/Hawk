@@ -1,8 +1,5 @@
 package com.hawk.transform;
 
-import java.util.Random;
-
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
@@ -17,7 +14,6 @@ public class AdaptiveThresTransform extends Transform {
 	private int mean = TransConstants.ADAPTIVE_MEAN;
 
 	public AdaptiveThresTransform() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 
@@ -28,33 +24,65 @@ public class AdaptiveThresTransform extends Transform {
 		this.thresholdType = thresholdType;
 		this.blockSize = blockSize;
 	}
-
-	@Override
-	public void initialize() {
-		// TODO Auto-generated method stub
-		super.initialize();
-		this.blockSize = Helper.getRandomInRange(3, 7);
-		if(this.blockSize % 2 == 0)
-			this.blockSize--;
-		int a=Helper.getRandomInRange(0, 3);
-		switch(a)
+	public int setParam1() {
+		int temp = Helper.getRandomInRange(3, 7);
+		if(temp % 2 == 0)
+			temp--;
+		return temp;
+	}
+	
+	public void setParam2() {
+		switch(Helper.getRandomInRange(0, 1))
 		{
 		case 0:
-			this.adaptiveMethod=Imgproc.ADAPTIVE_THRESH_MEAN_C;
-			this.thresholdType=Imgproc.THRESH_BINARY;
+			this.adaptiveMethod = Imgproc.ADAPTIVE_THRESH_MEAN_C;
 			break;
 		case 1:
-			this.adaptiveMethod=Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C;
-			this.thresholdType=Imgproc.THRESH_BINARY;
+			this.adaptiveMethod = Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C;
+		}
+	}
+	
+	public void setParam3() {
+		switch(Helper.getRandomInRange(0, 1))
+		{
+		case 0:
+			this.thresholdType = Imgproc.THRESH_BINARY_INV;
+			break;
+		case 1:
+			this.thresholdType = Imgproc.THRESH_BINARY;
+		}
+	}
+	
+	@Override
+	public void initialize() {
+		super.initialize();
+		this.noOfParameters=3;
+		this.setParam1();
+		this.setParam2();
+		this.setParam3();
+	}
+
+	@Override
+	public void mutate() {
+		switch(Helper.getRandomInRange(1, this.noOfParameters)) {
+		case 1:
+			int tempVal;
+			do {
+				tempVal = this.setParam1();
+			}while(tempVal == this.blockSize);
+			this.blockSize = tempVal;
 			break;
 		case 2:
-			this.adaptiveMethod=Imgproc.ADAPTIVE_THRESH_MEAN_C;
-			this.thresholdType=Imgproc.THRESH_BINARY_INV;
+			if(this.adaptiveMethod == Imgproc.ADAPTIVE_THRESH_MEAN_C)
+				this.adaptiveMethod = Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C;
+			else
+				this.adaptiveMethod = Imgproc.ADAPTIVE_THRESH_MEAN_C;
 			break;
 		case 3:
-			this.adaptiveMethod=Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C;
-			this.thresholdType=Imgproc.THRESH_BINARY_INV;
-			break;
+			if(this.thresholdType == Imgproc.THRESH_BINARY)
+				this.thresholdType = Imgproc.THRESH_BINARY_INV;
+			else
+				this.thresholdType = Imgproc.THRESH_BINARY;
 		}
 	}
 

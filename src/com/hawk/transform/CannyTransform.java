@@ -1,7 +1,5 @@
 package com.hawk.transform;
 
-import java.util.Random;
-
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
@@ -45,9 +43,8 @@ public class CannyTransform extends Transform {
 	}
 
 	public CannyTransform() {
-		// TODO Auto-generated constructor stub
 		super();
-		// initialize();
+
 	}
 
 	public CannyTransform(Mat src, Mat dst, double minTresh, double maxTresh,
@@ -59,26 +56,58 @@ public class CannyTransform extends Transform {
 		this.norm = norm;
 	}
 
+	public int setParam1() {
+		int temp = Helper.getRandomInRange(3, 7);
+		if (temp % 2 == 0) {
+			temp--;
+		}
+		return temp;
+	}
+	
+	public void setParam2() {
+		switch(Helper.getRandomInRange(0, 1)) {
+		case 0:
+			this.norm = true;
+			break;
+		case 1:
+			this.norm = false;
+		}
+	}
+	
+	public void setParam3() {
+		this.minTresh = Helper.getRandomInRange(10, 100);
+		this.maxTresh = this.minTresh*Helper.getRandomInRange(2, 4);
+	}
+	
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-		this.kernel = Helper.getRandomInRange(3, 7);
-		this.norm=true;
-		if (this.kernel % 2 == 0)
-		{
-			this.kernel--;
-			this.norm=false;
-		}
-		this.minTresh=Helper.getRandomInRange(10, 100);
-		this.maxTresh = this.minTresh*Helper.getRandomInRange(2, 4);
+		this.noOfParameters=3;
+		this.setParam1();
+		this.setParam2();
+		this.setParam3();
+	}
 
-		// super.initialize();
+	@Override
+	public void mutate() {
+		switch(Helper.getRandomInRange(1, this.noOfParameters)) {
+		case 1:
+			int tempVal;
+			do {
+				tempVal = this.setParam1();
+			}while(tempVal == this.kernel);
+			this.kernel = tempVal;
+			break;
+		case 2:
+			this.norm = !(this.norm);
+			break;
+		case 3:
+			this.setParam3();
+		}
+		
 	}
 
 	@Override
 	public void makeTransform() {
-		// TODO Auto-generated method stub
-		// super.makeTransform();
 		Imgproc.Canny(src, dst, minTresh, maxTresh, kernel, norm);
 	}
 

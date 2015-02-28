@@ -7,7 +7,6 @@ import org.opencv.core.Scalar;
 
 public class LogTransform extends Transform {
 	public LogTransform() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 
@@ -16,12 +15,20 @@ public class LogTransform extends Transform {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+	}
+
+	@Override
+	public void mutate() {
+		super.mutate();
+	}
+
+	@Override
 	public void makeTransform() {
-		// TODO Auto-generated method stub
 		src.convertTo(dst, CvType.CV_32F);
 		Core.log(dst, dst);
 		Core.multiply(dst, new Scalar(20), dst);
-		// Core.convertScaleAbs(dst,dst);
 		dst.convertTo(dst, CvType.CV_8UC1);
 	}
 

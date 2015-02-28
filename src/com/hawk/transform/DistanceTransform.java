@@ -1,8 +1,5 @@
 package com.hawk.transform;
 
-import java.util.Random;
-
-import org.opencv.core.Core;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
@@ -31,7 +28,6 @@ public class DistanceTransform extends Transform {
 
 	public DistanceTransform() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public DistanceTransform(Mat src, Mat dst, int distance, int maskSize) {
@@ -39,16 +35,11 @@ public class DistanceTransform extends Transform {
 		this.distance = distance;
 		this.maskSize = maskSize;
 	}
-
-	@Override
-	public void initialize() {
-		// TODO Auto-generated method stub
-		// super.initialize();
-		int a = Helper.getRandomInRange(0, 2);
-		switch(a)
-		{
+	
+	public void setParam1() {
+		switch(Helper.getRandomInRange(0, 2)) {
 		case 0:
-			this.distance=Imgproc.CV_DIST_L1;
+			this.distance = Imgproc.CV_DIST_L1;
 			this.maskSize = Imgproc.CV_DIST_MASK_3;
 			break;
 		case 1:
@@ -57,9 +48,7 @@ public class DistanceTransform extends Transform {
 			break;
 		case 2:
 			this.distance = Imgproc.CV_DIST_L2;
-			int b = Helper.getRandomInRange(0, 2);
-			switch(b)
-			{
+			switch(Helper.getRandomInRange(0, 2)) {
 			case 0:
 				this.maskSize = Imgproc.CV_DIST_MASK_3;
 				break;
@@ -71,13 +60,28 @@ public class DistanceTransform extends Transform {
 			}
 		}
 	}
+	
+	@Override
+	public void mutate() {
+		if(this.distance == Imgproc.CV_DIST_L1)
+			this.distance = Imgproc.CV_DIST_C;
+		else if(this.distance == Imgproc.CV_DIST_C)
+			this.distance = Imgproc.CV_DIST_L1;
+		else
+			this.distance = Imgproc.CV_DIST_L1;
+			this.maskSize = Imgproc.CV_DIST_MASK_3;
+	}
+
+	@Override
+	public void initialize() {
+		this.noOfParameters = 1;
+		this.setParam1();
+	}
 
 	@Override
 	public void makeTransform() {
-		// Imgproc.cvtColor(src, dst,Imgproc.COLOR_RGB2GRAY);
 		Imgproc.distanceTransform(src, dst, distance, maskSize);
 		dst.convertTo(dst, CvType.CV_8UC1);
-
 	}
 
 }

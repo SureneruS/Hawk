@@ -16,7 +16,6 @@ public class IntegralImgTransform extends Transform {
 
 	public IntegralImgTransform() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public IntegralImgTransform(Mat src, Mat dst, int sdepth) {
@@ -26,15 +25,11 @@ public class IntegralImgTransform extends Transform {
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-		// super.initialize();
 		this.sdepth = -1;
 	}
 
 	@Override
 	public void makeTransform() {
-		// TODO Auto-generated method stub
-		// super.makeTransform();
 		Imgproc.integral(src, dst, sdepth);
 	}
 }

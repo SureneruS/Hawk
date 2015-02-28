@@ -1,11 +1,6 @@
 package com.hawk.transform;
 
-import java.util.Random;
-
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
 import com.hawk.GA.Helper;
@@ -38,41 +33,36 @@ public class HoughCircleTransform extends Transform {
 	}
 
 	public HoughCircleTransform() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 
 	@Override
 	public void makeTransform() {
-		// TODO Auto-generated method stub
 		if(circles == null)
 			circles = new Mat();
 		Imgproc.HoughCircles(src, circles, TransConstants.HOUGH_CIRCLES_METHOD,TransConstants.HOUGH_CIRCLES_DP, minDist);
-		// makeDestImage();
 		this.dst = circles;
+	}
+	
+	public int setParam1() {
+		int temp = Helper.getRandomInRange(2, 5);
+		temp = (int) java.lang.Math.pow(2, temp);
+		return this.src.rows() / temp;
+	}
+	
+	@Override
+	public void mutate() {
+		int tempVal;
+		do {
+			tempVal = this.setParam1();
+		}while(tempVal == this.minDist);
+		this.minDist = tempVal;
 	}
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-		int a = Helper.getRandomInRange(2, 5);
-		a=(int) java.lang.Math.pow(2, a);
-		this.minDist = src.rows() / a;
-		// super.initialize();
+		this.noOfParameters = 1;
+		this.minDist = this.setParam1();
 	}
-	/*
-	 * private void makeDestImage(){
-	 * 
-	 * Imgproc.cvtColor(src, dst, Imgproc.COLOR_GRAY2BGR); for(int i=0; i <
-	 * circles.cols();i++){
-	 * 
-	 * double x = circles.get(0, i)[0]; double y = circles.get(0, i)[1]; double
-	 * rad = circles.get(0, i)[2]; int radius = (int) Math.round(rad);
-	 * 
-	 * Point center = new Point(x,y); Core.circle(dst, center, radius, new
-	 * Scalar(0, 255, 0));
-	 * 
-	 * } }
-	 */
 
 }
