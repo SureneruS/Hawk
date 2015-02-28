@@ -28,9 +28,9 @@ import com.hawk.transform.TransID;
 import com.hawk.transform.Transform;
 
 public class EcoFeature implements Serializable{
-	private static final long serialVersionUID = 96L;
+	private static final long serialVersionUID = 7673222297785642456L;
 	boolean isWorking;
-	private Rect region;
+	private transient Rect region;
 	private List<Transform> transforms = new ArrayList<Transform>();
 	private Perceptron perceptron;
 
@@ -202,6 +202,22 @@ public class EcoFeature implements Serializable{
 		return roi;
 	}
 
+	public void trainWith(Mat trainingImage, boolean expectedOutput) {
+		Mat featureVector = applyFeature(trainingImage);
+		if(isWorking) {
+			perceptron.train(featureVector, expectedOutput);
+		}
+	}
+
+	public int calculateFitnessScore() {
+		return perceptron.getFitness();
+	}
+
+	public void updateErrorWith(Mat trainingImage, boolean expectedOutput) {
+		Mat featureVector = applyFeature(trainingImage);
+		perceptron.updateErrorRate(featureVector, expectedOutput);
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder strBuff = new StringBuilder();
@@ -229,24 +245,8 @@ public class EcoFeature implements Serializable{
 		return strBuff.toString();
 	}
 
-	public void trainWith(Mat trainingImage, boolean expectedOutput) {
-		Mat featureVector = applyFeature(trainingImage);
-		if(isWorking) {
-			perceptron.train(featureVector, expectedOutput);
-		}
-	}
-
-	public int calculateFitnessScore() {
-		return perceptron.getFitness();
-	}
-
-	public void updateErrorWith(Mat trainingImage, boolean expectedOutput) {
-		Mat featureVector = applyFeature(trainingImage);
-		perceptron.updateErrorRate(featureVector, expectedOutput);
-	}
-	
 	private void writeObject(ObjectOutputStream out) throws IOException {
-        //out.defaultWriteObject();
+        out.defaultWriteObject();
 		out.writeBoolean(this.isWorking);
         out.writeInt(this.region.x);
         out.writeInt(this.region.y);
@@ -255,7 +255,7 @@ public class EcoFeature implements Serializable{
     }
 
     private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
-        //in.defaultReadObject();
+        in.defaultReadObject();
     	this.isWorking = in.readBoolean();
         this.region = new Rect(in.readInt(), in.readInt(), in.readInt(), in.readInt());
     }

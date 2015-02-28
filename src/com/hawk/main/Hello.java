@@ -21,6 +21,7 @@ public class Hello {
 		ga.run();
 		for(EcoFeature f : ga.features) {
 			System.out.println(f);
+			System.out.println((EcoFeature)DeepCopy.copy(f));
 		}
 		System.out.println(ga.positiveTrainingImages.size());
 	}
