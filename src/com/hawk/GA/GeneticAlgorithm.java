@@ -102,7 +102,7 @@ public class GeneticAlgorithm {
 	
 	private void saveFeatures() {
 		for(EcoFeature feature : this.features) {
-			if(feature.fitnessScore >= fitnessThreshold) {
+			if(feature.calculateFitnessScore() >= fitnessThreshold) {
 				saveFeature(feature);
 			}
 		}
@@ -158,7 +158,7 @@ public class GeneticAlgorithm {
 			this.trainFeatures();
 			this.updateFitnessScores();
 			this.saveFeatures();
-			this.enhanceFeatures();
+			//this.enhanceFeatures();
 		}
 	}
 }

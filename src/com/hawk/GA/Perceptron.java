@@ -1,11 +1,13 @@
 package com.hawk.GA;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.opencv.core.Mat;
 
-public class Perceptron {
+public class Perceptron implements Serializable{
+	private static final long serialVersionUID = -3175503085945192829L;
 	private Double bias;
 	private List<Double> weights;
 	private double learningRate;
@@ -84,4 +86,12 @@ public class Perceptron {
 		System.out.println(truePositive + " " + falseNegative + " " + trueNegative + " " + falsePositive);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder strBuff = new StringBuilder();
+		strBuff.append("\nweights: " + weights.size());
+		strBuff.append("\nfitness: " + fitness);
+		
+		return strBuff.toString();
+	}
 }

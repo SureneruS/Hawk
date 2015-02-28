@@ -10,6 +10,7 @@ import com.hawk.GA.Helper;
 import com.hawk.transform.constant.TransConstants;
 
 public class DiffGaussianTransform extends Transform{
+	private static final long serialVersionUID = -8090851511505613136L;
 	private int ksize1;
 	private int ksize2;
 		

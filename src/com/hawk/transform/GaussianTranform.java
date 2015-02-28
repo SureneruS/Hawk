@@ -8,6 +8,7 @@ import com.hawk.GA.Helper;
 import com.hawk.transform.constant.TransConstants;
 
 public class GaussianTranform extends Transform {
+	private static final long serialVersionUID = 7666447103832550856L;
 	private int size;
 
 	public GaussianTranform() {

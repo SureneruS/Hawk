@@ -6,7 +6,7 @@ import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 public class GaborTransform extends Transform {
-
+	private static final long serialVersionUID = -6363224392897660681L;
 	private int ddepth;
 	private Mat kernel;
 	private Size ksize;

@@ -6,6 +6,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 
 public class SqrtTransform extends Transform {
+	private static final long serialVersionUID = 4521003607164709789L;
 
 	public SqrtTransform() {
 		super();

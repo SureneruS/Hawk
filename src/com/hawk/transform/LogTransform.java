@@ -6,6 +6,8 @@ import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 
 public class LogTransform extends Transform {
+	private static final long serialVersionUID = 1303934558767793027L;
+
 	public LogTransform() {
 		super();
 	}

@@ -7,6 +7,7 @@ import com.hawk.GA.Helper;
 import com.hawk.transform.constant.TransConstants;
 
 public class AdaptiveThresTransform extends Transform {
+	private static final long serialVersionUID = -1292133446035104756L;
 	private int maxValue = TransConstants.ADAPTIVE_MAX_VAL;
 	private int adaptiveMethod;
 	private int thresholdType;

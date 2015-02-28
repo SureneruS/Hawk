@@ -6,6 +6,7 @@ import org.opencv.imgproc.Imgproc;
 import com.hawk.GA.Helper;
 
 public class MedianBlurTransform extends Transform {
+	private static final long serialVersionUID = 6740559338019859646L;
 	private int ksize;
 
 	public int getKsize() {

@@ -7,6 +7,7 @@ import org.opencv.imgproc.Imgproc;
 import com.hawk.GA.Helper;
 
 public class DistanceTransform extends Transform {
+	private static final long serialVersionUID = 8075099588028940188L;
 	private int distance;
 	private int maskSize;
 

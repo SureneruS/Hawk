@@ -7,6 +7,7 @@ import com.hawk.GA.Helper;
 import com.hawk.transform.constant.TransConstants;
 
 public class HoughCircleTransform extends Transform {
+	private static final long serialVersionUID = 439870533613354675L;
 	private Mat circles;
 	private int minDist;
 

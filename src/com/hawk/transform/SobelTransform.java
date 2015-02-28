@@ -7,7 +7,7 @@ import com.hawk.GA.Helper;
 import com.hawk.transform.constant.TransConstants;
 
 public class SobelTransform extends Transform {
-
+	private static final long serialVersionUID = -8062793946856949877L;
 	private int ddepth;
 	private int dx;
 	private int dy;

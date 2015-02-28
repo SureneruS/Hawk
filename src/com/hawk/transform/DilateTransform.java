@@ -7,7 +7,8 @@ import com.hawk.GA.Helper;
 import com.hawk.transform.constant.TransConstants;
 
 public class DilateTransform extends Transform {
-	private Mat kernel = TransConstants.STRUCTURED_ELEMENT;
+	private static final long serialVersionUID = -466846243871606120L;
+	private static Mat kernel = TransConstants.STRUCTURED_ELEMENT;
 	private int iteration;
 
 	public DilateTransform() {
