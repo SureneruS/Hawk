@@ -7,7 +7,6 @@ import com.hawk.transform.constant.TransConstants;
 
 public class HoughLineTransform extends Transform {
 	private static final long serialVersionUID = -2510864209479802961L;
-	private Mat lines;
 	private double rho;
 	private double theta;
 	private int threshold = TransConstants.HOUGH_LINE_THRESHLD;
@@ -20,8 +19,6 @@ public class HoughLineTransform extends Transform {
 		super(src, dst);
 		this.rho = rho;
 		this.theta = theta;
-		this.lines = new Mat();
-
 	}
 
 	@Override
@@ -32,10 +29,7 @@ public class HoughLineTransform extends Transform {
 
 	@Override
 	public void makeTransform() {
-		if (lines == null)
-			lines = new Mat();
-		Imgproc.HoughLines(src, lines, rho, theta, threshold);
-		this.dst = lines;
+		Imgproc.HoughLines(src, dst, rho, theta, threshold);
 	}
 
 	public double getRho() {
@@ -52,10 +46,6 @@ public class HoughLineTransform extends Transform {
 
 	public void setTheta(double theta) {
 		this.theta = theta;
-	}
-
-	public Mat getLines() {
-		return lines;
 	}
 
 	public int getThreshold() {

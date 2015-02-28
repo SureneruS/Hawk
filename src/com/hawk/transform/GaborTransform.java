@@ -8,7 +8,6 @@ import org.opencv.imgproc.Imgproc;
 public class GaborTransform extends Transform {
 	private static final long serialVersionUID = -6363224392897660681L;
 	private int ddepth;
-	private Mat kernel;
 	private Size ksize;
 	private double sigma;
 	private double theta;
@@ -81,14 +80,6 @@ public class GaborTransform extends Transform {
 		this.ddepth = ddepth;
 	}
 
-	public Mat getKernel() {
-		return kernel;
-	}
-
-	public void setKernel(Mat kernel) {
-		this.kernel = kernel;
-	}
-
 	public GaborTransform() {
 		super();
 	}
@@ -104,8 +95,6 @@ public class GaborTransform extends Transform {
 		this.lambda = lambd;
 		this.psi = psi;
 		this.ktype = ktype;
-		this.kernel = Imgproc.getGaborKernel(ksize, sigma, theta, lambd, gamma,
-				psi, ktype);
 	}
 
 	@Override
@@ -119,12 +108,12 @@ public class GaborTransform extends Transform {
 		this.gamma = 0.5;
 		this.psi = Math.toRadians(89);
 		this.ktype = CvType.CV_32F;
-		this.kernel = Imgproc.getGaborKernel(ksize, sigma, theta, lambda,
-				gamma, psi, ktype);
 	}
 
 	@Override
 	public void makeTransform() {
+		Mat kernel = Imgproc.getGaborKernel(ksize, sigma, theta, lambda, gamma,
+				psi, ktype);
 		Imgproc.filter2D(src, dst, ddepth, kernel);
 		dst.convertTo(dst, CvType.CV_8UC1, 25 / 255.0);
 	}

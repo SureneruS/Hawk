@@ -8,22 +8,13 @@ import com.hawk.transform.constant.TransConstants;
 
 public class HoughCircleTransform extends Transform {
 	private static final long serialVersionUID = 439870533613354675L;
-	private Mat circles;
 	private int minDist;
 
 	public HoughCircleTransform(Mat src, Mat dst, int minDist) {
 		super(src, dst);
 		this.minDist = src.rows() / minDist;
-		this.circles = new Mat();
 	}
 
-	public Mat getCircles() {
-		return circles;
-	}
-
-	public void setCircles(Mat circles) {
-		this.circles = circles;
-	}
 
 	public int getMinDist() {
 		return minDist;
@@ -39,10 +30,7 @@ public class HoughCircleTransform extends Transform {
 
 	@Override
 	public void makeTransform() {
-		if(circles == null)
-			circles = new Mat();
-		Imgproc.HoughCircles(src, circles, TransConstants.HOUGH_CIRCLES_METHOD,TransConstants.HOUGH_CIRCLES_DP, minDist);
-		this.dst = circles;
+		Imgproc.HoughCircles(src, dst, TransConstants.HOUGH_CIRCLES_METHOD,TransConstants.HOUGH_CIRCLES_DP, minDist);
 	}
 	
 	public int setParam1() {
