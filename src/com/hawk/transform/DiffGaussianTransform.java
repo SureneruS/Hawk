@@ -47,13 +47,6 @@ public class DiffGaussianTransform extends Transform{
 		return temp;
 	}
 	
-	public int setParam2() {
-		int temp = Helper.getRandomInRange(1, 7);
-		if(temp % 2 == 0)
-			temp--;
-		return temp;
-	}
-	
 	@Override
 	public void initialize() {
 		this.noOfParameters = 2;
