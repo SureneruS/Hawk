@@ -20,17 +20,16 @@ public class Hello {
 		GeneticAlgorithm ga = new GeneticAlgorithm(1, 1, 700, 2, 1);
 		ga.run();
 		for(EcoFeature f : ga.features) {
-			f.printFeature();
-			System.out.println(f.fitnessScore);;
+			System.out.println(f);
 		}
 		System.out.println(ga.positiveTrainingImages.size());
 	}
 	
 	public static void testCopy() {
 		EcoFeature e1 = new EcoFeature();
-		e1.printFeature();
+		System.out.println(e1);
 		
 		EcoFeature e2 = (EcoFeature)DeepCopy.copy(e1);
-		e2.printFeature();
+		System.out.println(e2);
 	}
 }

@@ -1,5 +1,8 @@
 package com.hawk.GA;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,11 +28,11 @@ import com.hawk.transform.TransID;
 import com.hawk.transform.Transform;
 
 public class EcoFeature implements Serializable{
+	private static final long serialVersionUID = 96L;
+	boolean isWorking;
 	private Rect region;
 	private List<Transform> transforms = new ArrayList<Transform>();
 	private Perceptron perceptron;
-	public int fitnessScore;
-	boolean isWorking;
 
 	public EcoFeature() {
 		this(generateRegion());
@@ -179,20 +182,13 @@ public class EcoFeature implements Serializable{
 	public Mat applyFeature(Mat image) {
 		Mat roi = new Mat();
 		new Mat(image, region).copyTo(roi);
-		//int i = 0;
 		try {
 			for (Transform transform : transforms) {
 				transform.setSrc(roi);
 				transform.setDst(roi);
 				transform.makeTransform();
-
-				//Imshow window = new Imshow("Test" + i++);
-				//window.showImage(roi);
-
 			}
 
-			//Imshow window1 = new Imshow("Test");
-			//window1.showImage(roi);
 			roi = Helper.linearize(roi);
 
 			if (perceptron == null) {
@@ -206,29 +202,61 @@ public class EcoFeature implements Serializable{
 		return roi;
 	}
 
-	public void printFeature() {
-		System.out.println(this.region.x);
-		System.out.println(this.region.y);
-		System.out.println(this.region.width);
-		System.out.println(this.region.height);
-		System.out.println();
-
-		for (Transform t : transforms) {
-			System.out.println(t.getClass().toString());
+	@Override
+	public String toString() {
+		StringBuilder strBuff = new StringBuilder();
+		strBuff.append("\nisWorking: " + isWorking);
+		strBuff.append("\n\nSubregion:");
+		strBuff.append("\n--------- ");
+		strBuff.append("\n     x     : " + this.region.x);
+		strBuff.append("\n     y     : " + this.region.y);
+		strBuff.append("\n     width : " + this.region.width);
+		strBuff.append("\n     height: " + this.region.height);
+		strBuff.append("\n\nTransforms:");
+		strBuff.append("\n---------- ");
+		if(transforms != null) {
+			for (Transform t : transforms) {
+				strBuff.append("\n    " + t.getClass().toString());
+			}
 		}
+		
+		strBuff.append("\n\nPerceptron: ");
+		strBuff.append("\n--------- ");
+		if(perceptron != null) {
+			strBuff.append(perceptron.toString());
+		}
+		strBuff.append("\n");
+		return strBuff.toString();
 	}
 
 	public void trainWith(Mat trainingImage, boolean expectedOutput) {
 		Mat featureVector = applyFeature(trainingImage);
-		perceptron.train(featureVector, expectedOutput);
+		if(isWorking) {
+			perceptron.train(featureVector, expectedOutput);
+		}
 	}
 
-	public void calculateFitnessScore() {
-		this.fitnessScore = perceptron.getFitness();
+	public int calculateFitnessScore() {
+		return perceptron.getFitness();
 	}
 
 	public void updateErrorWith(Mat trainingImage, boolean expectedOutput) {
 		Mat featureVector = applyFeature(trainingImage);
 		perceptron.updateErrorRate(featureVector, expectedOutput);
 	}
+	
+	private void writeObject(ObjectOutputStream out) throws IOException {
+        //out.defaultWriteObject();
+		out.writeBoolean(this.isWorking);
+        out.writeInt(this.region.x);
+        out.writeInt(this.region.y);
+        out.writeInt(this.region.width);
+        out.writeInt(this.region.height);
+    }
+
+    private void readObject(ObjectInputStream in) throws IOException, ClassNotFoundException {
+        //in.defaultReadObject();
+    	this.isWorking = in.readBoolean();
+        this.region = new Rect(in.readInt(), in.readInt(), in.readInt(), in.readInt());
+    }
 }

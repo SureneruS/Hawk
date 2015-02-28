@@ -84,4 +84,12 @@ public class Perceptron {
 		System.out.println(truePositive + " " + falseNegative + " " + trueNegative + " " + falsePositive);
 	}
 
+	@Override
+	public String toString() {
+		StringBuilder strBuff = new StringBuilder();
+		strBuff.append("weights: " + weights);
+		strBuff.append("fitness: " + fitness);
+		
+		return strBuff.toString();
+	}
 }
