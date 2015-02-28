@@ -1,13 +1,12 @@
 package com.hawk.GA;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 
-import com.atul.JavaOpenCV.Imshow;
 import com.hawk.transform.AdaptiveThresTransform;
 import com.hawk.transform.CannyTransform;
 import com.hawk.transform.DilateTransform;
@@ -25,7 +24,7 @@ import com.hawk.transform.SqrtTransform;
 import com.hawk.transform.TransID;
 import com.hawk.transform.Transform;
 
-public class EcoFeature {
+public class EcoFeature implements Serializable{
 	private Rect region;
 	private List<Transform> transforms = new ArrayList<Transform>();
 	private Perceptron perceptron;

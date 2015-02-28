@@ -4,7 +4,7 @@ import org.opencv.core.Core;
 
 import com.hawk.GA.EcoFeature;
 import com.hawk.GA.GeneticAlgorithm;
-import com.hawk.GA.Perceptron;
+import com.hawk.helper.DeepCopy;
 //import org.opencv.imgproc.Imgproc;
 
 public class Hello {
@@ -13,6 +13,7 @@ public class Hello {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 		
 		testGA();
+		//testCopy();
 	}
 
 	public static void testGA() {
@@ -23,5 +24,13 @@ public class Hello {
 			System.out.println(f.fitnessScore);;
 		}
 		System.out.println(ga.positiveTrainingImages.size());
+	}
+	
+	public static void testCopy() {
+		EcoFeature e1 = new EcoFeature();
+		e1.printFeature();
+		
+		EcoFeature e2 = (EcoFeature)DeepCopy.copy(e1);
+		e2.printFeature();
 	}
 }
