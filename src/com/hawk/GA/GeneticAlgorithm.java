@@ -113,17 +113,41 @@ public class GeneticAlgorithm {
 		return new EcoFeature();
 	}
 	
+	/*
+	 * Crossover rate is 0.6
+	 */
+	private int findNewCount() {
+		int newCount = 0;
+		for(int i = 0; i < this.populationSize; i++) {
+			int randomNumber = Helper.getRandomInRange(1, 1000);
+			if(randomNumber <= 400) {
+				newCount++;
+			}
+		}
+		
+		return newCount;
+	}
+	
+	private List<EcoFeature> newFeaturesByCrossOver(List<EcoFeature> parentFeatures) {
+		//TODO
+		
+		return null;
+	}
+	
 	private void enhanceFeatures() {
-		// TODO Auto-generated method stub
 		List<EcoFeature> newFeatures = new ArrayList<EcoFeature>();
-		// cross over rate = 0.6
-		for(int i = 0; i < (0.4 * this.populationSize); i++) { 
+		int newCount = findNewCount();
+		int crossOverCount = this.populationSize - newCount;
+		for(int i = 0; i < newCount; i++) { 
 			newFeatures.add(randomGoodFeature());
 		}
 		
-		for(int i = 0; i < (0.6 * this.populationSize); i++) {
-			//newFeatures.add(e);
+		List<EcoFeature> crossOver = new ArrayList<EcoFeature>();
+		for(int i = 0; i < crossOverCount; i++) {
+			crossOver.addAll(newFeaturesByCrossOver(newFeatures));
 		}
+		
+		// TODO Mutation
 		
 	}
 	
