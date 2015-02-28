@@ -56,8 +56,8 @@ public class AdaptiveThresTransform extends Transform {
 	@Override
 	public void initialize() {
 		super.initialize();
-		this.noOfParameters=3;
-		this.setParam1();
+		this.noOfParameters = 3;
+		this.blockSize = this.setParam1();
 		this.setParam2();
 		this.setParam3();
 	}

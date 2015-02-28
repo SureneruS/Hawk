@@ -82,7 +82,7 @@ public class CannyTransform extends Transform {
 	@Override
 	public void initialize() {
 		this.noOfParameters=3;
-		this.setParam1();
+		this.kernel = this.setParam1();
 		this.setParam2();
 		this.setParam3();
 	}

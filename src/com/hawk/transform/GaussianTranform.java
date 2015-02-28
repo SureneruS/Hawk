@@ -11,7 +11,6 @@ public class GaussianTranform extends Transform {
 	private int size;
 
 	public GaussianTranform() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 
@@ -44,8 +43,6 @@ public class GaussianTranform extends Transform {
 	
 	@Override
 	public void makeTransform() {
-		// TODO Auto-generated method stub
-
 		Imgproc.GaussianBlur(src, dst, new Size(size, size),
 				TransConstants.GAUSSIAN_SIGMA);
 

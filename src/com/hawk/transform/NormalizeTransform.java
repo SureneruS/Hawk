@@ -36,7 +36,6 @@ public class NormalizeTransform extends Transform {
 	}
 
 	public NormalizeTransform() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 
