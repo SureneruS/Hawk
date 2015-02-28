@@ -6,8 +6,8 @@ import org.opencv.core.Mat;
 
 public abstract class Transform implements Serializable{
 	private static final long serialVersionUID = 2660086647243884988L;
-	protected Mat src;
-	protected Mat dst;
+	protected transient Mat src;
+	protected transient Mat dst;
 	public int noOfParameters;
 
 	public Mat getSrc() {

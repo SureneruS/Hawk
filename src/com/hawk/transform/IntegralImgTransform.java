@@ -4,6 +4,7 @@ import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
 public class IntegralImgTransform extends Transform {
+	private static final long serialVersionUID = 321588071613750473L;
 	private int sdepth;
 
 	public int getSdepth() {

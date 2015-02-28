@@ -7,6 +7,7 @@ import com.hawk.GA.Helper;
 import com.hawk.transform.constant.TransConstants;
 
 public class LapcianTransform extends Transform {
+	private static final long serialVersionUID = 4502348388144666886L;
 	private int ksize;
 
 	public int getKsize() {

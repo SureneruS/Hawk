@@ -7,6 +7,7 @@ import org.opencv.core.Mat;
 import com.hawk.transform.constant.TransConstants;
 
 public class NormalizeTransform extends Transform {
+	private static final long serialVersionUID = -1421366177369032237L;
 	private double alpha;
 	private int norm;
 	private int depth;

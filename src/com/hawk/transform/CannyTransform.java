@@ -6,6 +6,7 @@ import org.opencv.imgproc.Imgproc;
 import com.hawk.GA.Helper;
 
 public class CannyTransform extends Transform {
+	private static final long serialVersionUID = 1570407180983084308L;
 	private double minTresh, maxTresh;
 	private int kernel;
 	private boolean norm;

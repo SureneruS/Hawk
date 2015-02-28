@@ -5,7 +5,6 @@ import org.opencv.core.Core;
 import com.hawk.GA.EcoFeature;
 import com.hawk.GA.GeneticAlgorithm;
 import com.hawk.helper.DeepCopy;
-import org.opencv.imgproc.Imgproc;
 
 public class Hello {
 

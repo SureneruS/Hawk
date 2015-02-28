@@ -6,6 +6,7 @@ import org.opencv.imgproc.Imgproc;
 import com.hawk.transform.constant.TransConstants;
 
 public class HoughLineTransform extends Transform {
+	private static final long serialVersionUID = -2510864209479802961L;
 	private Mat lines;
 	private double rho;
 	private double theta;

@@ -7,7 +7,8 @@ import com.hawk.GA.Helper;
 import com.hawk.transform.constant.TransConstants;
 
 public class ErodeTransform extends Transform {
-	private Mat kernel = TransConstants.STRUCTURED_ELEMENT;
+	private static final long serialVersionUID = 8460462680410583483L;
+	private static Mat kernel = TransConstants.STRUCTURED_ELEMENT;
 	private int iteration;
 
 	public ErodeTransform() {

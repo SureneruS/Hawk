@@ -7,6 +7,7 @@ import org.opencv.imgproc.Imgproc;
 import com.hawk.GA.Helper;
 
 public class HarrisCornStrenTransform extends Transform {
+	private static final long serialVersionUID = 4291473411174554108L;
 	private int blockSize;
 	private int ksize;
 	private double k;
