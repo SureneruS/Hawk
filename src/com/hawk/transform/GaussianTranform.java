@@ -1,7 +1,5 @@
 package com.hawk.transform;
 
-import java.util.Random;
-
 import org.opencv.core.Mat;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
@@ -22,15 +20,28 @@ public class GaussianTranform extends Transform {
 		this.size = size;
 	}
 
-	@Override
-	public void initialize() {
-		// TODO Auto-generated method stub
-		// super.initialize();
-		this.size = Helper.getRandomInRange(1, 9);
-		if (this.size % 2 == 0)
-			this.size--;
+	public int setParam1() {
+		int temp = Helper.getRandomInRange(1, 9);
+		if(temp % 2 == 0)
+			temp--;
+		return temp;
 	}
 
+	@Override
+	public void mutate() {
+		int tempVal;
+		do {
+			tempVal = this.setParam1();
+		}while(tempVal == this.size);
+		this.size = tempVal;
+	}
+
+	@Override
+	public void initialize() {
+		this.noOfParameters = 1;
+		this.size = this.setParam1();
+	}
+	
 	@Override
 	public void makeTransform() {
 		// TODO Auto-generated method stub

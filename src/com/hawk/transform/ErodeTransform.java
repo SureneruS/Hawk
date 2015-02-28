@@ -1,7 +1,5 @@
 package com.hawk.transform;
 
-import java.util.Random;
-
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
@@ -13,7 +11,6 @@ public class ErodeTransform extends Transform {
 	private int iteration;
 
 	public ErodeTransform() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 
@@ -22,10 +19,23 @@ public class ErodeTransform extends Transform {
 		this.iteration = iteration;
 	}
 
+	public int setParam1() {
+		return Helper.getRandomInRange(1, 5);
+	}
+
+	@Override
+	public void mutate() {
+		int tempVal;
+		do {
+			tempVal = this.setParam1();
+		}while(tempVal == this.iteration);
+		this.iteration = tempVal;
+	}
+
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-		this.iteration = Helper.getRandomInRange(1, 5);
+		this.noOfParameters = 1;
+		this.iteration = this.setParam1();
 	}
 
 	@Override

@@ -50,7 +50,6 @@ public class NormalizeTransform extends Transform {
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
 		super.initialize();
 		this.alpha = 50;
 		this.norm = Core.NORM_MINMAX;
@@ -59,13 +58,9 @@ public class NormalizeTransform extends Transform {
 
 	@Override
 	public void makeTransform() {
-		// TODO Auto-generated method stub
 		Core.normalize(src, dst, alpha, TransConstants.NORMALIZE_BETA, norm,
 				depth);
-		// Core.normalize(src, dst,,255,Core.NORM_MINMAX);
-		// Core.convertScaleAbs(dst,dst);
 		dst.convertTo(dst, CvType.CV_8UC1);
-		// super.makeTransform();
 	}
 
 }

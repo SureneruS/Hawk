@@ -90,7 +90,6 @@ public class GaborTransform extends Transform {
 	}
 
 	public GaborTransform() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 
@@ -111,8 +110,6 @@ public class GaborTransform extends Transform {
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-		// super.initialize();
 		this.ddepth = CvType.CV_32F;
 		Size s = new Size(3, 3);
 		this.ksize = s;
@@ -128,7 +125,6 @@ public class GaborTransform extends Transform {
 
 	@Override
 	public void makeTransform() {
-		// TODO Auto-generated method stub
 		Imgproc.filter2D(src, dst, ddepth, kernel);
 		dst.convertTo(dst, CvType.CV_8UC1, 25 / 255.0);
 	}

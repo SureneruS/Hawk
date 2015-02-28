@@ -1,7 +1,5 @@
 package com.hawk.transform;
 
-import java.util.Random;
-
 import org.opencv.core.Mat;
 import org.opencv.imgproc.Imgproc;
 
@@ -20,7 +18,6 @@ public class LapcianTransform extends Transform {
 	}
 
 	public LapcianTransform() {
-		// TODO Auto-generated constructor stub
 		super();
 	}
 
@@ -28,19 +25,31 @@ public class LapcianTransform extends Transform {
 		super(src, dst);
 		this.ksize = ksize;
 	}
+	
+	public int setParam1() {
+		int temp = Helper.getRandomInRange(1, 7);
+		if(temp % 2 == 0)
+			temp--;
+		return temp;
+	}
+
+	@Override
+	public void mutate() {
+		int tempVal;
+		do {
+			tempVal = this.setParam1();
+		}while(tempVal == this.ksize);
+		this.ksize = tempVal;
+	}
 
 	@Override
 	public void initialize() {
-		// TODO Auto-generated method stub
-		this.ksize = Helper.getRandomInRange(1, 7);
-		if (this.ksize % 2 == 0)
-			this.ksize--;
-		// super.initialize();
+		this.noOfParameters = 1;
+		this.ksize = this.setParam1();
 	}
 
 	@Override
 	public void makeTransform() {
-		// TODO Auto-generated method stub
 		Imgproc.Laplacian(src, dst, TransConstants.LAPCIAN_DDEPTH, ksize,
 				TransConstants.LAPCIAN_SCALE, TransConstants.LAPCIAN_DELTA);
 	}

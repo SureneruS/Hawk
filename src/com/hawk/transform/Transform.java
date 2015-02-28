@@ -5,6 +5,7 @@ import org.opencv.core.Mat;
 public abstract class Transform {
 	protected Mat src;
 	protected Mat dst;
+	public int noOfParameters;
 
 	public Mat getSrc() {
 		return src;
@@ -23,7 +24,10 @@ public abstract class Transform {
 	}
 
 	public void initialize() {
-		// System.out.println("XXX");
+
+	}
+	public void mutate()	{
+
 	}
 
 	public Transform(Mat src, Mat dst) {

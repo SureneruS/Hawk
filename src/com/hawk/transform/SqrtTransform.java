@@ -9,7 +9,6 @@ public class SqrtTransform extends Transform {
 
 	public SqrtTransform() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public SqrtTransform(Mat src, Mat dst) {
@@ -17,8 +16,16 @@ public class SqrtTransform extends Transform {
 	}
 
 	@Override
+	public void initialize() {
+		super.initialize();
+	}
+
+	@Override
+	public void mutate() {
+	}
+
+	@Override
 	public void makeTransform() {
-		// TODO Auto-generated method stub
 		src.convertTo(dst, CvType.CV_32F);
 		Core.sqrt(dst, dst);
 		Core.multiply(dst, new Scalar(10), dst);
