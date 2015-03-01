@@ -15,10 +15,10 @@ import com.hawk.helper.DeepCopy;
 import com.hawk.transform.Transform;
 
 public class GeneticAlgorithm {
-	public List<Mat> positiveTrainingImages = new ArrayList<Mat>();
-	public List<Mat> negativeTrainingImages = new ArrayList<Mat>();
+	private List<Mat> positiveTrainingImages = new ArrayList<Mat>();
+	private List<Mat> negativeTrainingImages = new ArrayList<Mat>();
 	//public List<EcoFeature> features = new ArrayList<EcoFeature>();
-	public List<EcoFeature> savedFeatures = new ArrayList<EcoFeature>();
+	private List<EcoFeature> savedFeatures = new ArrayList<EcoFeature>();
 	
 	/*
 	 * populationSize must be always even
@@ -47,7 +47,7 @@ public class GeneticAlgorithm {
 	}
 
 	private void addImages(List<Mat> imageList, String trainingimagedirectory) {
-		File directory = new File(trainingimagedirectory);;
+		File directory = new File(trainingimagedirectory);
 		File[] fileList = directory.listFiles();
 		for (File file : fileList) {
 			if (file.isFile()) {
@@ -82,7 +82,7 @@ public class GeneticAlgorithm {
 	}
 
 	private void trainFeatures(List<EcoFeature> features) {
-		System.out.println("Training");
+		System.out.print("Training");
 		for (EcoFeature feature : features) {
 			System.out.print(".");
 			for(Mat trainingImage : positiveTrainingImages) {
@@ -110,9 +110,9 @@ public class GeneticAlgorithm {
 				//System.out.println("Negative Image input...");
 				feature.updateErrorWith(trainingImage, false);
 			}
-			System.out.println();
 			feature.calculateFitnessScore();
 		}
+		System.out.println();
 	}
 	
 	private void saveFeature(EcoFeature e) {
@@ -253,5 +253,9 @@ public class GeneticAlgorithm {
 		
 		System.out.println("Genetic Algorithm successfully terminated at generation: " + (generationNumber - 1));
 		System.out.println("Number of ECOFeatures found: " + savedFeatures.size());
+	}
+
+	public List<EcoFeature> getFeatures() {
+		return this.savedFeatures;
 	}
 }
