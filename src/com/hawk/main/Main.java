@@ -24,14 +24,14 @@ public class Main {
 	public static void trainCar() {
 		GAControls.PositiveTrainingImageDirectory = home + "/FYP/cars_yes";
 		GAControls.NegativeTrainingImageDirectory = home + "/FYP/cars_no";
-		GeneticAlgorithm ga = new GeneticAlgorithm(5, 1, 500, 2, 10);
+		GeneticAlgorithm ga = new GeneticAlgorithm(20, 100, 600, 2, 100);
 		ga.run();
 		List<EcoFeature> resultFeatures = ga.getFeatures();	
 		for(EcoFeature e : resultFeatures) {
 			System.out.println(e.calculateFitnessScore());
 		}
 		
-		ManageFeatures.store(resultFeatures, home + "/FYP/Features/car/");
+		ManageFeatures.store(resultFeatures, home + "/FYP/Features/car/", false);
 	}
 	
 	public static void trainAdaboostCar() {
