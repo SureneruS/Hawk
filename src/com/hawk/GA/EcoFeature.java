@@ -12,12 +12,17 @@ import org.opencv.core.Rect;
 
 import com.hawk.transform.AdaptiveThresTransform;
 import com.hawk.transform.CannyTransform;
+import com.hawk.transform.DiffGaussianTransform;
 import com.hawk.transform.DilateTransform;
 import com.hawk.transform.DistanceTransform;
 import com.hawk.transform.ErodeTransform;
 import com.hawk.transform.GaborTransform;
 import com.hawk.transform.GaussianTranform;
+import com.hawk.transform.HarrisCornStrenTransform;
 import com.hawk.transform.HistogramEquTranform;
+import com.hawk.transform.HoughCircleTransform;
+import com.hawk.transform.HoughLineTransform;
+import com.hawk.transform.IntegralImgTransform;
 import com.hawk.transform.LapcianTransform;
 import com.hawk.transform.LogTransform;
 import com.hawk.transform.MedianBlurTransform;
@@ -108,15 +113,8 @@ public class EcoFeature implements Serializable, Comparable<EcoFeature>{
 	 * Returns if the chosen transform must be final or not
 	 */
 	private static boolean addTransform(List<Transform> transformList) throws Exception {
-		/*
-		 * transformList.add(new ErodeTransform()); transformList.add(new
-		 * LapcianTransform()); transformList.add(new ErodeTransform()); return
-		 * true;
-		 */
 		int randomTransform = Helper.getRandomInRange(0,
 				TransID.values().length - 1);
-		// System.out.println("randT: " + randomTransform + " len: " +
-		// TransID.values().length);
 		TransID transId = TransID.values()[randomTransform];
 		switch (transId) {
 		case AdaptiveThres:
@@ -140,21 +138,21 @@ public class EcoFeature implements Serializable, Comparable<EcoFeature>{
 		case Gaussian:
 			transformList.add(new GaussianTranform());
 			break;
-//		case HarisCorner:
-//			 transformList.add(new HarisCornStrenTransform());
-//			break;
+		case HarisCorner:
+			 transformList.add(new HarrisCornStrenTransform());
+			break;
 		case HistEqu:
 			transformList.add(new HistogramEquTranform());
 			break;
-//		case HoughCircle:
-//			 transformList.add(new HoughCircleTransform());
-//			return true;
-//		case HoughLine:
-//			 transformList.add(new HoughLineTransform());
-//			return true;
-//		case Integral:
-//			 transformList.add(new IntegralImgTransform());
-//			return true;
+		case HoughCircle:
+			 transformList.add(new HoughCircleTransform());
+			return true;
+		case HoughLine:
+			 transformList.add(new HoughLineTransform());
+			return true;
+		case Integral:
+			 transformList.add(new IntegralImgTransform());
+			return true;
 		case Lapcian:
 			transformList.add(new LapcianTransform());
 			break;
@@ -172,6 +170,9 @@ public class EcoFeature implements Serializable, Comparable<EcoFeature>{
 			break;
 		case Sqrt:
 			transformList.add(new SqrtTransform());
+			break;
+		case DiffGaussian:
+			transformList.add(new DiffGaussianTransform());
 			break;
 		default:
 			throw new Exception("How is this even possible!");

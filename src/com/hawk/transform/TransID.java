@@ -18,5 +18,6 @@ public enum TransID {
 	MedianBlur,
 	Normalize,
 	Sobel,
-	Sqrt
+	Sqrt,
+	DiffGaussian
 }
