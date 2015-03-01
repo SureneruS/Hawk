@@ -19,7 +19,17 @@ public class Main {
 	private static String home = System.getProperty("user.home");
 	public static void main(String[] args) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		trainCar();
+		//trainCar();
+		//trainAdaboostCar();
+//		System.out.println(predictImage(home + "/FYP/Input/1.jpg"));
+//		System.out.println(predictImage(home + "/FYP/Input/2.jpg"));
+		
+		List<Mat> inputs = new ArrayList<Mat>();
+		Helper.addImages(inputs, home + "/FYP/Input");
+		
+		for(Mat input : inputs) {
+			System.out.println(predictImage(input));
+		}
 	}
 
 	public static void trainCar() {
@@ -47,15 +57,16 @@ public class Main {
 		for(int i = responses.size(); i < trainingImages.size(); i++) {
 			responses.add(0);
 		}
-		
+		System.out.println("Loading Features...");
 		List<EcoFeature> features = ManageFeatures.load(home + "/FYP/Features/car/");
 		
 		Classifier classifier = new Classifier();
 		classifier.setTrainingImages(trainingImages);
 		classifier.setResponses(responses);
 		classifier.setWeakClassifiers(features);
+		System.out.println("AdaBoost Training...");
 		classifier.train();
-		classifier.save(home + "FYP/AdaBoost/car.xml");
+		classifier.save(home + "/FYP/AdaBoost/cars.xml");
 		
 	}
 	
@@ -66,7 +77,21 @@ public class Main {
 			Helper.standardizeImage(inputImage);
 			Classifier classifier = new Classifier();
 			classifier.setWeakClassifiers(ManageFeatures.load(home + "/FYP/Features/car/"));
-			classifier.load(home + "FYP/AdaBoost/car.xml");
+			classifier.load(home + "/FYP/AdaBoost/cars.xml");
+			return ("Car  " + classifier.predict(inputImage));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Image not found";
+		}
+	}
+	
+	public static String predictImage(Mat inputImage) {
+		
+		try {
+			Classifier classifier = new Classifier();
+			classifier.setWeakClassifiers(ManageFeatures.load(home + "/FYP/Features/car/"));
+			classifier.load(home + "/FYP/AdaBoost/cars.xml");
 			return ("Car  " + classifier.predict(inputImage));
 			
 		} catch (Exception e) {

@@ -1,5 +1,6 @@
 package com.hawk.classifier;
 
+import java.io.File;
 import java.util.List;
 
 import org.opencv.core.CvType;
@@ -112,10 +113,21 @@ public class Classifier {
 	}
 
 	public void save(String path) {
+		File file = new File(path).getParentFile();
+		if(!file.exists()) {
+			if(file.mkdirs()) {
+				System.out.println("ok");
+			}
+			else {
+				System.out.println("no");
+			}
+		}
+		file = new File(path);
 		boost.save(path);
 	}
 	
 	public void load(String path) {
+		boost = new CvBoost();
 		boost.load(path);
 	}
 }
