@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
+import org.opencv.highgui.Highgui;
 
 import com.hawk.GA.EcoFeature;
 import com.hawk.GA.GAControls;
@@ -49,7 +50,28 @@ public class Main {
 		
 		List<EcoFeature> features = ManageFeatures.load(home + "/FYP/Features/car/");
 		
-		Classifier classifier = new Classifier(trainingImages, responses, features);
-		classifier.run();
+		Classifier classifier = new Classifier();
+		classifier.setTrainingImages(trainingImages);
+		classifier.setResponses(responses);
+		classifier.setWeakClassifiers(features);
+		classifier.train();
+		classifier.save(home + "FYP/AdaBoost/car.xml");
+		
+	}
+	
+	public static String predictImage(String imgPath) {
+		
+		try {
+			Mat inputImage = Highgui.imread(imgPath);
+			Helper.standardizeImage(inputImage);
+			Classifier classifier = new Classifier();
+			classifier.setWeakClassifiers(ManageFeatures.load(home + "/FYP/Features/car/"));
+			classifier.load(home + "FYP/AdaBoost/car.xml");
+			return ("Car  " + classifier.predict(inputImage));
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Image not found";
+		}
 	}
 }

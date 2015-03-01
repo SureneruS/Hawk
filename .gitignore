@@ -1,5 +1,6 @@
 .classpath
 src/com/hawk/transform/Test.java
 src/com/hawk/main/Temp.java
+src/com/hawk/GA/test/AdaboostTest.java
 src/com/hawk/GA/GAControls.java
 bin/*
