@@ -13,7 +13,17 @@ import com.hawk.GA.EcoFeature;
 public class ManageFeatures {
 
 	public static void store(List<EcoFeature> resultFeatures, String path) {
-		// TODO Auto-generated method stub
+		System.out.println(path);
+		File file = new File(path);
+		if(!file.exists()) {
+			if(file.mkdirs()) {
+				System.out.println("ok");
+			}
+			else {
+				System.out.println("no");
+			}
+		}
+		
 		int count = 0;
 		for(EcoFeature e : resultFeatures) {
 			try {
@@ -29,7 +39,8 @@ public class ManageFeatures {
 			}
 		}
 	}
-	public List<EcoFeature> load(String path) {
+	
+	public static List<EcoFeature> load(String path) {
 		File directory = new File(path);
 		List<EcoFeature> EcoFeatures = new ArrayList<EcoFeature>();
 		File[] fileList = directory.listFiles();
