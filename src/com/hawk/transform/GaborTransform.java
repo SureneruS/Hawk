@@ -8,7 +8,7 @@ import org.opencv.imgproc.Imgproc;
 public class GaborTransform extends Transform {
 	private static final long serialVersionUID = -6363224392897660681L;
 	private int ddepth;
-	private Size ksize;
+	private int ksize;
 	private double sigma;
 	private double theta;
 	private double gamma;
@@ -16,11 +16,11 @@ public class GaborTransform extends Transform {
 	private double psi;
 	private int ktype;
 
-	public Size getKsize() {
+	public int getKsize() {
 		return ksize;
 	}
 
-	public void setKsize(Size ksize) {
+	public void setKsize(int ksize) {
 		this.ksize = ksize;
 	}
 
@@ -84,7 +84,7 @@ public class GaborTransform extends Transform {
 		super();
 	}
 
-	public GaborTransform(Mat src, Mat dst, int ddepth, Size ksize,
+	public GaborTransform(Mat src, Mat dst, int ddepth, int ksize,
 			double sigma, double theta, double lambd, double gamma, double psi,
 			int ktype) {
 		super(src, dst);
@@ -100,8 +100,7 @@ public class GaborTransform extends Transform {
 	@Override
 	public void initialize() {
 		this.ddepth = CvType.CV_32F;
-		Size s = new Size(3, 3);
-		this.ksize = s;
+		this.ksize = 3;
 		this.sigma = 1;
 		this.theta = 0;
 		this.lambda = 8;
@@ -112,7 +111,8 @@ public class GaborTransform extends Transform {
 
 	@Override
 	public void makeTransform() {
-		Mat kernel = Imgproc.getGaborKernel(ksize, sigma, theta, lambda, gamma,
+		Size s = new Size(ksize, ksize);
+		Mat kernel = Imgproc.getGaborKernel(s, sigma, theta, lambda, gamma,
 				psi, ktype);
 		Imgproc.filter2D(src, dst, ddepth, kernel);
 		dst.convertTo(dst, CvType.CV_8UC1, 25 / 255.0);

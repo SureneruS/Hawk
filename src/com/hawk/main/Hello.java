@@ -16,11 +16,14 @@ public class Hello {
 	}
 
 	public static void testGA() {
-		GeneticAlgorithm ga = new GeneticAlgorithm(3, 2, 700, 2, 1);
+		GeneticAlgorithm ga = new GeneticAlgorithm(10, 50, 550, 2, 100);
+//		for(EcoFeature f : ga.features) {
+//			System.out.println(f);
+//			//System.out.println((EcoFeature)DeepCopy.copy(f));
+//		}
 		ga.run();
-		for(EcoFeature f : ga.features) {
-			System.out.println(f);
-			//System.out.println((EcoFeature)DeepCopy.copy(f));
+		for(EcoFeature e : ga.savedFeatures) {
+			System.out.println(e.calculateFitnessScore());
 		}
 		System.out.println(ga.positiveTrainingImages.size());
 	}

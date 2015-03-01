@@ -73,7 +73,7 @@ public class NormalizeTransform extends Transform {
 	public void makeTransform() {
 		Core.normalize(src, dst, alpha, TransConstants.NORMALIZE_BETA, norm,
 				depth);
-		System.out.println(dst.dump());
+		//System.out.println(dst.dump());
 		dst.convertTo(dst, CvType.CV_8UC1);
 	}
 

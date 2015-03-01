@@ -27,11 +27,13 @@ import com.hawk.transform.SqrtTransform;
 import com.hawk.transform.TransID;
 import com.hawk.transform.Transform;
 
-public class EcoFeature implements Serializable{
+public class EcoFeature implements Serializable, Comparable<EcoFeature>{
 	private static final long serialVersionUID = 7673222297785642456L;
 	boolean isWorking;
+	boolean isTrained;
 	private transient Rect region;
 	private List<Transform> transforms = new ArrayList<Transform>();
+	private Perceptron perceptron;
 	
 	public Rect getRegion() {
 		return region;
@@ -53,7 +55,6 @@ public class EcoFeature implements Serializable{
 		this.transforms.addAll(transforms);
 	}
 
-	private Perceptron perceptron;
 
 	public EcoFeature() {
 		this(generateRegion());
@@ -70,11 +71,15 @@ public class EcoFeature implements Serializable{
 	public EcoFeature(Rect r, List<Transform> t) {
 		this.region = r;
 		this.transforms = t;
-		// int vectorSize = t.get(t.size() - 1).
-		// this.perceptron = new Perceptron();
 		this.isWorking = true;
+		this.isTrained = false;
 	}
 
+	public void resetPerceptron() {
+		this.isTrained = false;
+		this.perceptron = null;
+	}
+	
 	private static List<Transform> generateTransforms() {
 		List<Transform> transformList = new ArrayList<Transform>();
 		int numberOfTransforms = Helper.getRandomInRange(
@@ -281,7 +286,8 @@ public class EcoFeature implements Serializable{
         this.region = new Rect(in.readInt(), in.readInt(), in.readInt(), in.readInt());
     }
 
-	public int compare(EcoFeature ecoFeature) {
+    @Override
+	public int compareTo(EcoFeature ecoFeature) {
 		int thisFitness = this.calculateFitnessScore();
 		int otherFitness = ecoFeature.calculateFitnessScore();
 		

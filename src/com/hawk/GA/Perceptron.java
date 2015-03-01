@@ -83,7 +83,6 @@ public class Perceptron implements Serializable{
 	private void updateFitness() {
 		fitness = (int) (((truePositive * 500.0) / (truePositive + falseNegative)) +
 						 ((trueNegative * 500.0) / (trueNegative + falsePositive)));
-		System.out.println(truePositive + " " + falseNegative + " " + trueNegative + " " + falsePositive);
 	}
 
 	@Override
@@ -91,7 +90,7 @@ public class Perceptron implements Serializable{
 		StringBuilder strBuff = new StringBuilder();
 		strBuff.append("\nweights: " + weights.size());
 		strBuff.append("\nfitness: " + fitness);
-		
+		strBuff.append("\n" + truePositive + " " + falseNegative + " " + trueNegative + " " + falsePositive + "\n");
 		return strBuff.toString();
 	}
 }
