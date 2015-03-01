@@ -32,6 +32,27 @@ public class EcoFeature implements Serializable{
 	boolean isWorking;
 	private transient Rect region;
 	private List<Transform> transforms = new ArrayList<Transform>();
+	
+	public Rect getRegion() {
+		return region;
+	}
+
+	public void setRegion(Rect region) {
+		this.region = region;
+	}
+
+	public List<Transform> getTransforms() {
+		return transforms;
+	}
+
+	public void setTransforms(List<Transform> transforms) {
+		this.transforms = transforms;
+	}
+	
+	public void appendTransforms(List<Transform> transforms) {
+		this.transforms.addAll(transforms);
+	}
+
 	private Perceptron perceptron;
 
 	public EcoFeature() {
@@ -114,21 +135,21 @@ public class EcoFeature implements Serializable{
 		case Gaussian:
 			transformList.add(new GaussianTranform());
 			break;
-		case HarisCorner:
-			// transformList.add(new HarisCornStrenTransform());
-			break;
+//		case HarisCorner:
+//			 transformList.add(new HarisCornStrenTransform());
+//			break;
 		case HistEqu:
 			transformList.add(new HistogramEquTranform());
 			break;
-		case HoughCircle:
-			// transformList.add(new HoughCircleTransform());
-			return true;
-		case HoughLine:
-			// transformList.add(new HoughLineTransform());
-			return true;
-		case Integral:
-			// transformList.add(new IntegralImgTransform());
-			return true;
+//		case HoughCircle:
+//			 transformList.add(new HoughCircleTransform());
+//			return true;
+//		case HoughLine:
+//			 transformList.add(new HoughLineTransform());
+//			return true;
+//		case Integral:
+//			 transformList.add(new IntegralImgTransform());
+//			return true;
 		case Lapcian:
 			transformList.add(new LapcianTransform());
 			break;
@@ -171,7 +192,7 @@ public class EcoFeature implements Serializable{
 				return new Rect(startX, startY, width, height);
 			} catch (Exception e) {
 				ok = false;
-				e.printStackTrace();
+				//e.printStackTrace();
 				System.out.println("Trying again...");
 			}
 		}
@@ -259,4 +280,11 @@ public class EcoFeature implements Serializable{
     	this.isWorking = in.readBoolean();
         this.region = new Rect(in.readInt(), in.readInt(), in.readInt(), in.readInt());
     }
+
+	public int compare(EcoFeature ecoFeature) {
+		int thisFitness = this.calculateFitnessScore();
+		int otherFitness = ecoFeature.calculateFitnessScore();
+		
+		return (thisFitness - otherFitness);
+	}
 }

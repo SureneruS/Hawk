@@ -14,7 +14,7 @@ public class Helper {
 	 */
 	public static int getRandomInRange(int start, int end) {
 		if (start > end) {
-			throw new IllegalArgumentException("start > end: not possible");
+			throw new IllegalArgumentException("start > end ("+ start + " > " + end + "): not possible");
 		}
 
 		long range = (long) end - (long) start + 1;

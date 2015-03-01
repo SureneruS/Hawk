@@ -22,6 +22,6 @@ public class HistogramTransform extends Transform {
         MatOfInt histSize = new MatOfInt(256,256);
         MatOfFloat ranges = new MatOfFloat(0.0f,255.0f, 0.0f, 255.0f);
 		Imgproc.calcHist(imagesList, channels, new Mat(), dst, histSize, ranges);
-		System.out.println(dst.dump());
+		//System.out.println(dst.dump());
 	}
 }
