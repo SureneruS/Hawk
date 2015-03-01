@@ -228,7 +228,7 @@ public class EcoFeature implements Serializable, Comparable<EcoFeature>{
 		return roi;
 	}
 
-	public void trainWith(Mat trainingImage, boolean expectedOutput) {
+	public void trainWith(Mat trainingImage, int expectedOutput) {
 		Mat featureVector = applyFeature(trainingImage);
 		if(isWorking) {
 			perceptron.train(featureVector, expectedOutput);
@@ -239,7 +239,7 @@ public class EcoFeature implements Serializable, Comparable<EcoFeature>{
 		return perceptron.getFitness();
 	}
 
-	public void updateErrorWith(Mat trainingImage, boolean expectedOutput) {
+	public void updateErrorWith(Mat trainingImage, int expectedOutput) {
 		Mat featureVector = applyFeature(trainingImage);
 		perceptron.updateErrorRate(featureVector, expectedOutput);
 	}
@@ -292,5 +292,9 @@ public class EcoFeature implements Serializable, Comparable<EcoFeature>{
 		int otherFitness = ecoFeature.calculateFitnessScore();
 		
 		return (thisFitness - otherFitness);
+	}
+
+	public int classify(Mat featureVector) {
+		return perceptron.classify(featureVector);
 	}
 }

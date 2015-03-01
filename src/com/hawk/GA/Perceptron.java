@@ -27,9 +27,9 @@ public class Perceptron implements Serializable{
 		this.falsePositive = this.falseNegative = this.truePositive = this.trueNegative = 0;
 	}
 
-	public void train(Mat featureVector, boolean expectedOutput) {
-		boolean currentOutput = this.classify(featureVector);
-		int error = Helper.Int(expectedOutput) - Helper.Int(currentOutput);
+	public void train(Mat featureVector, int expectedOutput) {
+		int currentOutput = this.classify(featureVector);
+		int error = expectedOutput - currentOutput;
 		//System.out.println(error);
 		this.bias += learningRate * error;
 		int i = 0;
@@ -42,19 +42,20 @@ public class Perceptron implements Serializable{
 		//System.out.println();
 	}
 
-	public boolean classify(Mat featureVector) {
+	public int classify(Mat featureVector) {
 		//System.out.println(featureVector.channels());
 		Double output = bias;
 		for (int i = 0; i < this.weights.size(); i++) {
 			output += this.weights.get(i) * featureVector.get(0, i)[0];
 		}
 
-		return output > 0;
+		return (output > 0 ? +1 : 0);
 	}
 
-	public void updateErrorRate(Mat featureVector, boolean expectedOutput) {
-		boolean currentOutput = this.classify(featureVector);
-		int type = (currentOutput ? 1 : 0) + (expectedOutput ? 2 : 0);
+	public void updateErrorRate(Mat featureVector, int expectedOutput) {
+		int currentOutput = this.classify(featureVector);
+		// int type = (currentOutput ? 1 : 0) + (expectedOutput ? 2 : 0);
+		int type = currentOutput * 1 + expectedOutput * 2;
 		/*
 		 * type will have four values 0, 1, 2, 3. Each value will correspond to
 		 * one of the four types fp, fn, tp and tn

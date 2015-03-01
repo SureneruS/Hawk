@@ -1,15 +1,11 @@
 package com.hawk.GA;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
-import org.opencv.core.Size;
-import org.opencv.highgui.Highgui;
-import org.opencv.imgproc.Imgproc;
 
 import com.hawk.helper.DeepCopy;
 import com.hawk.transform.Transform;
@@ -42,18 +38,8 @@ public class GeneticAlgorithm {
 	}
 	
 	private void loadImages() {
-		addImages(positiveTrainingImages, GAControls.PositiveTrainingImageDirectory);
-		addImages(negativeTrainingImages, GAControls.NegativeTrainingImageDirectory);
-	}
-
-	private void addImages(List<Mat> imageList, String trainingimagedirectory) {
-		File directory = new File(trainingimagedirectory);
-		File[] fileList = directory.listFiles();
-		for (File file : fileList) {
-			if (file.isFile()) {
-				addImage(file.getAbsolutePath(), imageList);
-			}
-		}
+		Helper.addImages(positiveTrainingImages, GAControls.PositiveTrainingImageDirectory);
+		Helper.addImages(negativeTrainingImages, GAControls.NegativeTrainingImageDirectory);
 	}
 
 	private List<EcoFeature> initializeFeatures() {
@@ -65,32 +51,16 @@ public class GeneticAlgorithm {
 		return initPopulation;
 	}
 
-	private void addImage(String path, List<Mat> imageList) {
-		try {
-			Mat inputImage = Highgui.imread(path);
-			standardizeImage(inputImage);
-			imageList.add(inputImage);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	private static void standardizeImage(Mat inputImage) {
-		Imgproc.cvtColor(inputImage, inputImage, Imgproc.COLOR_RGB2GRAY);
-		Imgproc.resize(inputImage, inputImage, new Size(
-				GAControls.TrainingImageWidth, GAControls.TrainingImageHeight));
-	}
-
 	private void trainFeatures(List<EcoFeature> features) {
 		System.out.print("Training");
 		for (EcoFeature feature : features) {
 			System.out.print(".");
 			for(Mat trainingImage : positiveTrainingImages) {
-				feature.trainWith(trainingImage, true);
+				feature.trainWith(trainingImage, 1);
 			}
 			
 			for(Mat trainingImage : negativeTrainingImages) {
-				feature.trainWith(trainingImage, false);
+				feature.trainWith(trainingImage, 0);
 			}
 		}
 		System.out.println();
@@ -103,12 +73,12 @@ public class GeneticAlgorithm {
 			System.out.print(".");
 			for(Mat trainingImage : positiveTrainingImages) {
 				//System.out.println("Positive Image input...");
-				feature.updateErrorWith(trainingImage, true);
+				feature.updateErrorWith(trainingImage, 1);
 			}
 			
 			for(Mat trainingImage : negativeTrainingImages) {
 				//System.out.println("Negative Image input...");
-				feature.updateErrorWith(trainingImage, false);
+				feature.updateErrorWith(trainingImage, 0);
 			}
 			feature.calculateFitnessScore();
 		}
