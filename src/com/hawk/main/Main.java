@@ -1,5 +1,6 @@
 package com.hawk.main;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,28 +21,42 @@ public class Main {
 
 	public static void main(String[] args) {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
-		
-	//	trainAdaboost("car");
-		List<Mat> inputs = new ArrayList<Mat>();
-		Helper.addImages(inputs, home + "/FYP/Input");
-
-		for(Mat input : inputs) {
-			System.out.println(predictImage(input));
-		}  
+//		train("airplane");
+//		trainAdaboost("airplane");
+//		train("bike");
+//		trainAdaboost("bike");
+//		train("car");
+//		trainAdaboost("car");
+//		System.out.println(home);
+		String out = predictImage(args[0]);
+		System.out.println(out);
+//		trainAdaboost("car");  
+//		List<Mat> inputs = new ArrayList<Mat>();
+//		Helper.addImages(inputs, home + "/FYP/Input");
+//	
+//		for(Mat input : inputs) {
+//			System.out.println(predictImage(input));
+//		}  
+//		File directory = new File(args[0]);
+//		File directory = new File(home + "/FYP/Input");
+//		for(File f : directory.listFiles()) {
+//			System.out.println(predictImage(f.getAbsolutePath()));
+//		}
 	}
 
 	public static void train(String dataSet) {
 
 		GAControls.PositiveTrainingImageDirectory = home + "/FYP/" + dataSet + "_yes";
 		GAControls.NegativeTrainingImageDirectory = home + "/FYP/" + dataSet + "_no";
-		GeneticAlgorithm ga = new GeneticAlgorithm(20, 100, 600, 2, 100);
+		GAControls.dataset = dataSet;
+		GeneticAlgorithm ga = new GeneticAlgorithm(50, 200, 700, 2, 200);
 		ga.run();
 		List<EcoFeature> resultFeatures = ga.getFeatures();	
 		for(EcoFeature e : resultFeatures) {
 			System.out.println(e.calculateFitnessScore());
 		}
 
-		ManageFeatures.store(resultFeatures, home + "/FYP/Features/" + dataSet + "/", false);
+		//ManageFeatures.store(resultFeatures, home + "/FYP/Features/" + dataSet + "/", false);
 	}
 
 	public static void trainAdaboost(String dataSet) {
@@ -70,7 +85,7 @@ public class Main {
 	}
 
 	public static String predictImage(String imgPath) {
-
+		// System.out.print(imgPath + ": ");
 		Mat inputImage;
 		try {
 			inputImage = Highgui.imread(imgPath);

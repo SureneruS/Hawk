@@ -8,6 +8,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Rect;
 
 import com.hawk.helper.DeepCopy;
+import com.hawk.helper.ManageFeatures;
 import com.hawk.transform.Transform;
 
 public class GeneticAlgorithm {
@@ -87,6 +88,7 @@ public class GeneticAlgorithm {
 
 	private void saveFeature(EcoFeature e) {
 		savedFeatures.add((EcoFeature)DeepCopy.copy(e));
+		ManageFeatures.store(e, GAControls.home + "/FYP/Features/" + GAControls.dataset + "/");
 	}
 
 	private void saveFeatures(List<EcoFeature> features) {
@@ -195,6 +197,7 @@ public class GeneticAlgorithm {
 			boolean mutated = false;
 			for(Transform transform : f.getTransforms()) {
 				if(transform.noOfParameters * 0.02 > Math.random() ) {
+					System.out.println("Mutation hapenning");
 					transform.mutate();
 					mutated = true;
 				}

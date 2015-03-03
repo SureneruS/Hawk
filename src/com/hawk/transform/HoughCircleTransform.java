@@ -30,13 +30,14 @@ public class HoughCircleTransform extends Transform {
 
 	@Override
 	public void makeTransform() {
+		int minDist = src.rows() / this.minDist;
 		Imgproc.HoughCircles(src, dst, TransConstants.HOUGH_CIRCLES_METHOD,TransConstants.HOUGH_CIRCLES_DP, minDist);
 	}
 	
 	public int setParam1() {
 		int temp = Helper.getRandomInRange(2, 5);
 		temp = (int) java.lang.Math.pow(2, temp);
-		return this.src.rows() / temp;
+		return temp;
 	}
 	
 	@Override

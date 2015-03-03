@@ -144,15 +144,15 @@ public class EcoFeature implements Serializable, Comparable<EcoFeature>{
 		case HistEqu:
 			transformList.add(new HistogramEquTranform());
 			break;
-		case HoughCircle:
-			 transformList.add(new HoughCircleTransform());
-			return true;
-		case HoughLine:
-			 transformList.add(new HoughLineTransform());
-			return true;
-		case Integral:
-			 transformList.add(new IntegralImgTransform());
-			return true;
+//		case HoughCircle:
+//			 transformList.add(new HoughCircleTransform());
+//			return true;
+//		case HoughLine:
+//			 transformList.add(new HoughLineTransform());
+//			return true;
+//		case Integral:
+//			 transformList.add(new IntegralImgTransform());
+//			return true;
 		case Lapcian:
 			transformList.add(new LapcianTransform());
 			break;
@@ -220,6 +220,8 @@ public class EcoFeature implements Serializable, Comparable<EcoFeature>{
 
 			if (perceptron == null) {
 				perceptron = new Perceptron(roi.cols(), 0.1);
+			//	System.out.println("Perceptron initialized");
+				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

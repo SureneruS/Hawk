@@ -62,7 +62,7 @@ public class AdaptiveThresTransform extends Transform {
 		this.setParam2();
 		this.setParam3();
 	}
-
+	
 	@Override
 	public void mutate() {
 		switch(Helper.getRandomInRange(1, this.noOfParameters)) {

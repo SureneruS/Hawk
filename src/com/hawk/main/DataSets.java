@@ -8,8 +8,8 @@ public class DataSets {
 	
 	static {
 		IDs = new ArrayList<String>();
-		IDs.add("car");
 		IDs.add("bike");
+		IDs.add("car");
 		IDs.add("airplane");
 		IDs.add("human");
 	}

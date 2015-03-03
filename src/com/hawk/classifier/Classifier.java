@@ -86,14 +86,14 @@ public class Classifier {
 	}
 
 	public void train() {
-		Mat trainingDate = generateTrainingData();
+		Mat trainingData = generateTrainingData();
 		Mat response = generateResponse();
 		CvBoostParams params = generateParam();
-		Mat varType = new Mat(trainingDate.width() + 1, 1, CvType.CV_8U );
+		Mat varType = new Mat(trainingData.width() + 1, 1, CvType.CV_8U );
 		varType.setTo(new Scalar(0)); // 0 = CV_VAR_NUMERICAL.
-		varType.put(trainingDate.width(), 0, 1); // 1 = CV_VAR_CATEGORICAL;
+		varType.put(trainingData.width(), 0, 1); // 1 = CV_VAR_CATEGORICAL;
 		boost = new CvBoost();
-		boost.train(trainingDate, 1, response, new Mat(), new Mat(), varType, new Mat(), params, false);
+		boost.train(trainingData, 1, response, new Mat(), new Mat(), varType, new Mat(), params, false);
 	}
 
 	public float predict(Mat inputImage) {
