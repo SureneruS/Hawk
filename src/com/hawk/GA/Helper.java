@@ -27,6 +27,9 @@ public class Helper {
 		return (int) (fraction + start);
 	}
 
+	public static double random() {
+		return random.nextDouble();
+	}
 	public static Mat linearize(Mat roi) {
 		int rows = roi.rows();
 		int cols = roi.cols();

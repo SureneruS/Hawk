@@ -23,13 +23,13 @@ public class Main {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 //		train("airplane");
 //		trainAdaboost("airplane");
-//		train("bike");
-//		trainAdaboost("bike");
+		train("bike");
+		trainAdaboost("bike");
 //		train("car");
 //		trainAdaboost("car");
 //		System.out.println(home);
-		String out = predictImage(args[0]);
-		System.out.println(out);
+//		String out = predictImage(args[0]);
+//		System.out.println(out);
 //		trainAdaboost("car");  
 //		List<Mat> inputs = new ArrayList<Mat>();
 //		Helper.addImages(inputs, home + "/FYP/Input");
@@ -49,7 +49,7 @@ public class Main {
 		GAControls.PositiveTrainingImageDirectory = home + "/FYP/" + dataSet + "_yes";
 		GAControls.NegativeTrainingImageDirectory = home + "/FYP/" + dataSet + "_no";
 		GAControls.dataset = dataSet;
-		GeneticAlgorithm ga = new GeneticAlgorithm(50, 200, 700, 2, 200);
+		GeneticAlgorithm ga = new GeneticAlgorithm(5, 5, 500, 2, 200);
 		ga.run();
 		List<EcoFeature> resultFeatures = ga.getFeatures();	
 		for(EcoFeature e : resultFeatures) {
@@ -85,7 +85,7 @@ public class Main {
 	}
 
 	public static String predictImage(String imgPath) {
-		// System.out.print(imgPath + ": ");
+		System.out.print(imgPath + ": ");
 		Mat inputImage;
 		try {
 			inputImage = Highgui.imread(imgPath);

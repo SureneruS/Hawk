@@ -10,6 +10,7 @@ import org.opencv.core.Rect;
 import com.hawk.helper.DeepCopy;
 import com.hawk.helper.ManageFeatures;
 import com.hawk.transform.Transform;
+import com.sun.org.apache.xalan.internal.utils.FeatureManager.Feature;
 
 public class GeneticAlgorithm {
 	private List<Mat> positiveTrainingImages = new ArrayList<Mat>();
@@ -56,16 +57,29 @@ public class GeneticAlgorithm {
 		System.out.print("Training");
 		for (EcoFeature feature : features) {
 			System.out.print(".");
-			for(Mat trainingImage : positiveTrainingImages) {
-				feature.trainWith(trainingImage, 1);
+			int i = 0, j = 0;
+			int n = positiveTrainingImages.size();
+			int m = negativeTrainingImages.size();
+			while(i < n && j < m) {
+				double randomDouble = Helper.random();
+				if(randomDouble < 0.5) {
+					feature.trainWith(positiveTrainingImages.get(i++), 1);
+				}
+				else {
+					feature.trainWith(negativeTrainingImages.get(j++), 0);
+				}
 			}
-
-			for(Mat trainingImage : negativeTrainingImages) {
-				feature.trainWith(trainingImage, 0);
+			
+			while(i < n) {
+				feature.trainWith(positiveTrainingImages.get(i++), 1);
+			}
+			
+			while(j < m) {
+				feature.trainWith(negativeTrainingImages.get(j++), 0);
 			}
 		}
+		
 		System.out.println();
-
 	}
 
 	private void updateFitnessScores(List<EcoFeature> features) {
@@ -176,8 +190,8 @@ public class GeneticAlgorithm {
 			// Cross over rate is 0.6
 			if(Math.random() < 0.6) {
 				List<EcoFeature> childrenFeatures = null;
-				EcoFeature parentOne = selectFeatureForCrossOver(newFeatures);
-				EcoFeature parentTwo = selectFeatureForCrossOver(newFeatures);
+				EcoFeature parentOne = selectFeatureForCrossOver(features);
+				EcoFeature parentTwo = selectFeatureForCrossOver(features);
 				while(childrenFeatures == null) {
 					childrenFeatures = newFeaturesByCrossOver(parentOne, parentTwo);
 				}
@@ -215,8 +229,28 @@ public class GeneticAlgorithm {
 	}
 
 	private EcoFeature selectFeatureForCrossOver(List<EcoFeature> newFeatures) {
-		// TODO Improvise
-		return newFeatures.get(Helper.getRandomInRange(0, newFeatures.size() - 1));
+		double fitnessSum = 0;
+		for(EcoFeature f : newFeatures) {
+			fitnessSum += f.calculateFitnessScore();
+		}
+		
+		List<Double> prob = new ArrayList<Double>();
+		double probSum = 0;
+		for(EcoFeature f : newFeatures) {
+			double probability = (f.calculateFitnessScore()/fitnessSum);  
+			prob.add(probSum + probability);
+			probSum += probability;
+		}
+		
+		System.out.println("ProbSum: " + probSum);
+		double random = Helper.random();
+		for(int i = 0, n = prob.size(); i < n; i++) {
+			if(random > prob.get(i)) {
+				return newFeatures.get(i);
+			}
+		}
+		
+		return newFeatures.get(newFeatures.size() - 1);
 	}
 
 	public void run() {

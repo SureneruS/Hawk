@@ -10,8 +10,8 @@ public class DataSets {
 		IDs = new ArrayList<String>();
 		IDs.add("bike");
 		IDs.add("car");
-		IDs.add("airplane");
-		IDs.add("human");
+//		IDs.add("airplane");
+//		IDs.add("human");
 	}
 
 	public static List<String> getIDs() {
