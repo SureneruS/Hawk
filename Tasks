@@ -1,3 +1,11 @@
 1. Make sure that src is not modified in all the transforms
 2. Change all the ScaleAbsolute into convertTo function
 3. Training the same ECO feature in next generation is not necessary
+
+To Do:
+1. Find proper application and data sets
+2. Implement our own Adaboost training and predit functions
+3. Localized window search
+4. Cross over using best features
+5. Linearizing Hough line, hough circle and Integral transforms
+6. Parallelism or Multi-threads
