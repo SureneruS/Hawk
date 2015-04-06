@@ -3,6 +3,11 @@ package com.hawk.GA;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 import org.opencv.core.Mat;
 import org.opencv.core.Rect;
@@ -54,55 +59,129 @@ public class GeneticAlgorithm {
 	}
 
 	private void trainFeatures(List<EcoFeature> features) {
-		System.out.print("Training");
-		for (EcoFeature feature : features) {
-			System.out.print(".");
-			int i = 0, j = 0;
-			int n = positiveTrainingImages.size();
-			int m = negativeTrainingImages.size();
-			while(i < n && j < m) {
-				double randomDouble = Helper.random();
-				if(randomDouble < 0.5) {
-					feature.trainWith(positiveTrainingImages.get(i++), 1);
-				}
-				else {
-					feature.trainWith(negativeTrainingImages.get(j++), 0);
-				}
+		System.out.println("Training Started");		
+		/*int threads = Runtime.getRuntime().availableProcessors();
+	    ExecutorService service = Executors.newFixedThreadPool(threads*4);
+	    List<Future<EcoFeature>> futures = new ArrayList<Future<EcoFeature>>();
+	    for (final EcoFeature input : features) {
+	        Callable<EcoFeature> callable = new Callable<EcoFeature>() {
+	            public EcoFeature call() throws Exception {
+	            	return trainFeature(input);
+	            }
+	        };
+	        
+	        futures.add(service.submit(callable));
+	    }
+
+	    service.shutdown();
+	    
+	    List<EcoFeature> outputs = new ArrayList<EcoFeature>();
+	    for (Future<EcoFeature> future : futures) {
+	        try {
+				outputs.add(future.get());
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			
-			while(i < n) {
+	    }
+	    
+	    features = outputs;*/
+		
+		for (EcoFeature feature : features) {
+			trainFeature(feature);
+		}
+		
+		System.out.println("Training Ended");
+	}
+
+	private EcoFeature trainFeature(EcoFeature feature) {
+		System.out.println("T Start");
+		int i = 0, j = 0;
+		int n = positiveTrainingImages.size();
+		int m = negativeTrainingImages.size();
+		while(i < n && j < m) {
+			double randomDouble = Helper.random();
+			if(randomDouble < 0.5) {
 				feature.trainWith(positiveTrainingImages.get(i++), 1);
 			}
-			
-			while(j < m) {
+			else {
 				feature.trainWith(negativeTrainingImages.get(j++), 0);
 			}
 		}
 		
-		System.out.println();
+		while(i < n) {
+			feature.trainWith(positiveTrainingImages.get(i++), 1);
+		}
+		
+		while(j < m) {
+			feature.trainWith(negativeTrainingImages.get(j++), 0);
+		}
+		System.out.println("T End");
+		return feature;
 	}
 
 	private void updateFitnessScores(List<EcoFeature> features) {
-		System.out.print("Evaluating");
-		for(EcoFeature feature : features) {
-			System.out.print(".");
-			for(Mat trainingImage : positiveTrainingImages) {
-				//System.out.println("Positive Image input...");
-				feature.updateErrorWith(trainingImage, 1);
-			}
+		System.out.println("Evaluation Started");
+		
+		/*int threads = Runtime.getRuntime().availableProcessors();
+	    ExecutorService service = Executors.newFixedThreadPool(threads*4);
+	    List<Future<EcoFeature>> futures = new ArrayList<Future<EcoFeature>>();
+	    for (final EcoFeature input : features) {
+	        Callable<EcoFeature> callable = new Callable<EcoFeature>() {
+	            public EcoFeature call() throws Exception {
+	            	return updateFitnessScore(input);
+	            }
+	        };
+	        
+	        futures.add(service.submit(callable));
+	    }
 
-			for(Mat trainingImage : negativeTrainingImages) {
-				//System.out.println("Negative Image input...");
-				feature.updateErrorWith(trainingImage, 0);
+	    service.shutdown();
+	    
+	    List<EcoFeature> outputs = new ArrayList<EcoFeature>();
+	    for (Future<EcoFeature> future : futures) {
+	        try {
+				outputs.add(future.get());
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-			feature.calculateFitnessScore();
+	    }
+	    
+	    features = outputs;*/
+	    
+		for(EcoFeature feature : features) {
+			updateFitnessScore(feature);
 		}
-		System.out.println();
+		
+		System.out.println("Evaluation Ended");
+	}
+
+	private EcoFeature updateFitnessScore(EcoFeature feature) {
+		System.out.println("E Start");
+		for(Mat trainingImage : positiveTrainingImages) {
+			//System.out.println("Positive Image input...");
+			feature.updateErrorWith(trainingImage, 1);
+		}
+
+		for(Mat trainingImage : negativeTrainingImages) {
+			//System.out.println("Negative Image input...");
+			feature.updateErrorWith(trainingImage, 0);
+		}
+		feature.calculateFitnessScore();
+		System.out.println("E End");
+		return feature;
 	}
 
 	private void saveFeature(EcoFeature e) {
 		savedFeatures.add((EcoFeature)DeepCopy.copy(e));
-		ManageFeatures.store(e, GAControls.home + "/FYP/Features/" + GAControls.dataset + "/");
+		//ManageFeatures.store(e, GAControls.home + "/FYP/Features/" + GAControls.dataset + "/");
 	}
 
 	private void saveFeatures(List<EcoFeature> features) {

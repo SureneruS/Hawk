@@ -10,7 +10,7 @@ public class DataSets {
 		IDs = new ArrayList<String>();
 		IDs.add("bike");
 		IDs.add("car");
-//		IDs.add("airplane");
+		IDs.add("airplane");
 //		IDs.add("human");
 	}
 

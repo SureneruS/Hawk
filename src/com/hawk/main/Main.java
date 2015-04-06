@@ -23,8 +23,12 @@ public class Main {
 		System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
 //		train("airplane");
 //		trainAdaboost("airplane");
+		long startTime = System.nanoTime();
+
 		train("bike");
-		trainAdaboost("bike");
+//		trainAdaboost("bike");
+		long endTime = System.nanoTime();
+		System.out.println("Took "+(endTime - startTime)/1e9 + " ns"); 
 //		train("car");
 //		trainAdaboost("car");
 //		System.out.println(home);
@@ -49,7 +53,7 @@ public class Main {
 		GAControls.PositiveTrainingImageDirectory = home + "/FYP/" + dataSet + "_yes";
 		GAControls.NegativeTrainingImageDirectory = home + "/FYP/" + dataSet + "_no";
 		GAControls.dataset = dataSet;
-		GeneticAlgorithm ga = new GeneticAlgorithm(5, 5, 500, 2, 200);
+		GeneticAlgorithm ga = new GeneticAlgorithm(32, 1, 800, 5, 100);
 		ga.run();
 		List<EcoFeature> resultFeatures = ga.getFeatures();	
 		for(EcoFeature e : resultFeatures) {
@@ -81,6 +85,7 @@ public class Main {
 		System.out.println("AdaBoost Training...");
 		classifier.train();
 		classifier.save(home + "/FYP/AdaBoost/" + dataSet + ".xml");
+		System.out.println("Done.");
 
 	}
 
